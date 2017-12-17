@@ -15,9 +15,8 @@ test:
   database: db/test.sqlite3
 
 production:
+  url: <%= ENV["DATABASE_URL"] %>
   adapter: postgresql
   encoding: unicode
   database: myapp_production
   pool: 5
-  username: <%= ENV.fetch("USERNAME") %>
-  password: <%= ENV.fetch("PASSWORD") %>
