@@ -1,0 +1,24 @@
+.orders {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+
+  .order {
+    .exchange {
+      font-size: 30px;
+    }
+    .limit {
+      margin-top: -5px;
+      text-align: right;
+      color: green;
+    }
+    .created {
+      text-align: right;
+      font-size: 12px;
+      color: grey;
+      font-weight: lighter;
+    }
+  }
+}
+

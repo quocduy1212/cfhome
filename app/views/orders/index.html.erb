@@ -1,0 +1,9 @@
+<div class="orders">
+  <% @orders.each do |order| %>
+    <div class="order">
+      <div class="exchange"><%= order.exchange %></div>
+      <div class="limit"><%= order.limit %></div>
+      <div class="created"><%= order.opened_at.strftime('%m/%d/%Y %I:%M:%S %p') %></div>
+    </div>
+  <% end %>
+</div>
