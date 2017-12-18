@@ -9,12 +9,13 @@ body {
   transform: translate(-50%,-50%);
 
   .order {
+    margin-bottom: 10px;
+    text-align: right;
     .exchange {
       font-size: 32px;
     }
     .prices {
       margin-top: -5px;
-      text-align: right;
       .ask {
         font-size: 16px;
         color: darkred;
@@ -25,7 +26,6 @@ body {
       }
     }
     .created {
-      text-align: right;
       font-size: 14px;
       color: grey;
       font-weight: lighter;
