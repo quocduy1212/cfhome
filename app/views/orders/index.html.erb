@@ -3,9 +3,18 @@
     <div class="order">
       <div class="exchange"><%= order.exchange %></div>
       <div class="prices">
-        <span class="ask"><%= @quotes[order.exchange].ask.round(2) %></span>
-        /
-        <span class="limit"><%= order.limit.round(2) %></span>
+        <div class="buy">
+          <%= @perks[order.id][:buy] %>
+        </div>
+        <div class="ask">
+          <span class="delta <%= @perks[order.id][:delta] > 0 ? 'gain' : 'lost' %>">
+            <%= @perks[order.id][:delta] != 0 ? @perks[order.id][:delta_percentage] : '' %>
+          </span>
+          <%= @perks[order.id][:ask] %>
+        </div>
+        <div class="sell">
+          <%= '%.8f' % order.limit %>
+        </div>
       </div>
       <div class="created"><%= order.opened_at.in_time_zone.strftime('%m/%d/%Y %I:%M:%S %p') %></div>
     </div>
