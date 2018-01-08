@@ -31,11 +31,14 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
-gem 'bittrex'
+gem 'faraday'
+gem 'indicators'
+gem 'securities'
+gem 'rufus-scheduler'
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'rspec-rails', '~> 3.6'
   gem 'dotenv-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
