@@ -1,32 +1,40 @@
 module Checker
-  class TrendUp
+  class TrendUpDailyChange
     TREND_WEBHOOK = ENV["TREND_WEBHOOK"]
 
-    cattr_accessor :running, :pinned_market_state
+    cattr_accessor :running
     @@running = false
-    @@pinned_market_state = {}
 
     def self.check_all(proccess_name)
       if @@running
         'is already running, skip this scheduler trigger'
       else
-        @@running = true
-        markets = BittrexProvider::Summary.all
-        btc_all = markets.select{|m| m.name.start_with?('BTC-') }.sort{|x, y| y.base_volume <=> x.base_volume}
-        btc = btc_all[0..btc_all.length/3]
-        usdt = markets.select{|m| m.name.start_with?('USDT-') }.sort{|x, y| y.base_volume <=> x.base_volume}
+				begin
+					@@running = true
+					markets = BittrexProvider::Summary.all
+					btc_all = markets.select{|m| m.name.start_with?('BTC-') }.sort{|x, y| y.base_volume <=> x.base_volume}
+					btc = btc_all[0..btc_all.length/3].select{ | m | TrendUpDailyChange.daily_change(m) >= 0.05 }
+					usdt_all = markets.select{|m| m.name.start_with?('USDT-') }
+					usdt = usdt_all.select{ | m | TrendUpDailyChange.daily_change(m) >= 0 }
 
-        usdt.each_with_index{|m, i| TrendUp.check(m.name, 'fiveMin', i + 1, usdt.length) }
-        puts "#{Time.now}: #{proccess_name} checked #{usdt.length} USDT markets"
-        btc.each_with_index{|m, i| TrendUp.check(m.name, 'fiveMin', i + 1, btc.length) }
-        puts "#{Time.now}: #{proccess_name} checked #{btc.length} BTC markets"
-
+					usdt.each_with_index{|m, i| TrendUpDailyChange.check(m.name, TrendUpDailyChange.daily_change(m), 'fiveMin', i + 1, usdt.length) }
+					puts "#{Time.now}: #{proccess_name} checked #{usdt.length} USDT markets"
+					btc.each_with_index{|m, i| TrendUpDailyChange.check(m.name, TrendUpDailyChange.daily_change(m), 'fiveMin', i + 1, btc.length) }
+					puts "#{Time.now}: #{proccess_name} checked #{btc.length} BTC markets"
+				rescue Exception => ex
+					@@running = false
+					puts ex
+				end
         @@running = false
         "markets check successfully"
       end
     end
 
-    def self.check(market_name, interval = 'fiveMin', i = 0, n = 0)
+    def self.daily_change(m)
+      (m.last - m.previous_day) / m.previous_day
+    end
+
+    def self.check(market_name, daily_change, interval = 'fiveMin', i = 0, n = 0)
       last_24h_ticks = BittrexProvider::Historical.get(market_name, interval)[-50..-1]
       market_state = BittrexProvider::Model::MarketState.new(market_name)
       last_24h_ticks.each{|t| market_state.add_tick(t) }
@@ -42,13 +50,6 @@ module Checker
           end
         end
         if msg.present?
-          tmp = @@pinned_market_state[market_name] || 0
-          tmp += 1
-          @@pinned_market_state[market_name] = tmp
-          prays = ''
-          if tmp > 1
-            tmp.times{prays += ':pray:' }
-          end
           position = ''
           if (i > 0 && n > 0)
             position = "`#{i}/#{n}`"
@@ -58,12 +59,11 @@ module Checker
           con = Faraday.new(:url => TREND_WEBHOOK)
           response = con.post do |req|
             req.headers['Content-Type'] = 'application/json'
-            req.body = "{ 'text': '*#{market_name}* #{position} #{prays} \n#{msg}'}"
+            req.body = "{ 'text': '*#{market_name}* `+#{(daily_change * 100).round(2)}%` #{position} \n#{msg}'}"
           end
-        else
-          @@pinned_market_state[market_name] = 0
         end
       end
+      puts "#{Time.now}: #{market_name} +#{(daily_change * 100).round(2)}% checked"
       market_state
     end
   end

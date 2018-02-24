@@ -10,7 +10,9 @@ module BittrexProvider
       nonce = Time.now.to_i
       connection = Faraday.new(:url => HOST + "marketName=#{market_name}&tickInterval=#{tick_interval}&_=#{nonce}")
       response = connection.get
-      JSON.parse(response.body)['result'].map{|t| Model::Tick.new(t)}
+			body = JSON.parse(response.body)['result']
+			puts("get historical for #{market_name} status code: #{response.status}, body length: #{body.present? ? body.length : -1}")
+			body.present? ? body.map{|t| Model::Tick.new(t)} : []
     end
   end
 end
