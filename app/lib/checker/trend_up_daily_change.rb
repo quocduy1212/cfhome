@@ -21,7 +21,7 @@ module Checker
 					puts "#{Time.now}: #{proccess_name} checked #{usdt.length} USDT markets"
 					btc.each_with_index{|m, i| TrendUpDailyChange.check(m.name, TrendUpDailyChange.daily_change(m), 'fiveMin', i + 1, btc.length) }
 					puts "#{Time.now}: #{proccess_name} checked #{btc.length} BTC markets"
-				rescue Exception => ex
+				rescue StandardError => ex
 					@@running = false
 					puts ex
 				end

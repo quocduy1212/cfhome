@@ -43,22 +43,28 @@ module Checker
             msg += "\n>`1H: #{TrendUpTeller.format_recent_per_change(hour[:hc])}`"
             msg += "\n>`1D: #{TrendUpTeller.format_recent_per_change(day[:hc])}`"
 
-            con = Faraday.new(:url => TREND_WEBHOOK)
-            response = con.post do |req|
-              req.headers['Content-Type'] = 'application/json'
-              req.body = "{ 'text': '#{msg}'}"
-            end
-            if (response.status == 200)
-              DpxLogger.log_brief("Checker::TrendUpTeller.check_all | #{m.name} | pushed to slack")
-            end
-          else
-            # DpxLogger.log_brief("#{m.name} | +#{(TrendUpTeller.daily_change(m) * 100).round(2)}% skip!")
+            TrendUpTeller.push_to_slack(m.name, msg)
           end
         end
         ''
-      rescue Exception => ex
+      rescue StandardError => ex
         DpxLogger.log_exception(ex)
         ''
+      end
+    end
+
+    def self.push_to_slack(name, msg)
+      begin
+        DpxLogger.log_debug("Checker::TrendUpTeller.push_to_slack")
+
+        con = Faraday.new(:url => TREND_WEBHOOK)
+        response = con.post do |req|
+          req.headers['Content-Type'] = 'application/json'
+          req.body = "{ 'text': '#{msg}'}"
+        end
+        DpxLogger.log_brief("Checker::TrendUpTeller.check_all | #{name} | pushed to slack")
+      rescue Faraday::Error => fex
+        DpxLogger.log_exception(fex)
       end
     end
 

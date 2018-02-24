@@ -20,7 +20,7 @@ module Tellers
         up = on_up_trend
         hc = recent_history_percentage_change
         { bb: bb, up: up, hc: hc }
-      rescue Exception => ex
+      rescue StandardError => ex
         DpxLogger.log_exception(ex, @market_name)
         { bb: 0, up: 0, hc: [] }
       end
@@ -35,7 +35,7 @@ module Tellers
         up = on_up_trend('hour')
         hc = recent_history_percentage_change('hour')
         { bb: bb, up: up, hc: hc }
-      rescue Exception => ex
+      rescue StandardError => ex
         DpxLogger.log_exception(ex, @market_name)
         { bb: 0, up: 0, hc: [] }
       end
@@ -50,7 +50,7 @@ module Tellers
         up = on_up_trend('day')
         hc = recent_history_percentage_change('day')
         { bb: bb, up: up, hc: hc }
-      rescue Exception => ex
+      rescue StandardError => ex
         DpxLogger.log_exception(ex, @market_name)
         { bb: 0, up: 0, hc: [] }
       end
