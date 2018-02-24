@@ -28,8 +28,8 @@ module Checker
             # DpxLogger.log_brief("#{m.name} | +#{(TrendUpTeller.daily_change(m) * 100).round(2)}% | 1M: #{TrendUpTeller.format_recent_per_change(hour[:hc])}")
             # DpxLogger.log_brief("#{m.name} | +#{(TrendUpTeller.daily_change(m) * 100).round(2)}% | 1D: #{TrendUpTeller.format_recent_per_change(day[:hc])}")
 
-            surfer = day[:bb] > 0 && hour[:bb] > 0 && five_min[:bb] > 0 ? ':surfer' : ''
-            rocket = day[:up] > 0 && hour[:up] > 0 && five_min[:up] > 0 ? ':rocket' : ''
+            surfer = day[:bb] > 0 && hour[:bb] > 0 && five_min[:bb] > 0 ? ':surfer:' : ''
+            rocket = day[:up] > 0 && hour[:up] > 0 && five_min[:up] > 0 ? ':rocket:' : ''
 
             msg = "*#{m.name}* `+#{(TrendUpTeller.daily_change(m) * 100).round(2)}%` #{surfer} #{rocket}"
             msg += "\n• BB streak"
