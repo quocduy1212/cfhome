@@ -1,15 +1,12 @@
 require 'rufus-scheduler'
 
-UP_TREND = 'up_trend_24h_change'
-
 scheduler = Rufus::Scheduler.new
 
 scheduler.every '4m' do
   begin
-		puts "#{Time.now}: scheduler trigger #{UP_TREND}"
-		msg = Checker::TrendUpDailyChange.check_all(UP_TREND)
-		puts "#{Time.now}: #{UP_TREND} #{msg}"
+    DpxLogger.log_brief("Scheduler | Checker::TrendUpTeller.check_all")
+    Checker::TrendUpTeller.check_all()
   rescue Exception => ex
-    puts ex
+    DpxLogger.log_exception(ex)
   end
 end
