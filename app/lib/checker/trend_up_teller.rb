@@ -7,6 +7,7 @@ module Checker
     def self.check_all
       begin
         DpxLogger.log_debug("Checker::TrendUpTeller.check_all")
+        TrendUpTeller.push_to_slack("x-mode")
 
         markets = BittrexProvider::Summary.all
         btc_all = markets.select{|m| m.name.start_with?('BTC-') }.sort{|x, y| y.base_volume <=> x.base_volume}
@@ -31,7 +32,7 @@ module Checker
             surfer = day[:bb] > 0 && hour[:bb] > 0 && five_min[:bb] > 0 ? ':surfer:' : ''
             rocket = day[:up] > 0 && hour[:up] > 0 && five_min[:up] > 0 ? ':rocket:' : ''
 
-            msg = "*#{m.name}* `+#{(TrendUpTeller.daily_change(m) * 100).round(2)}%` #{surfer} #{rocket}"
+            msg = "*#{TrendUpTeller.encode_market_name(m.name)}* `+#{(TrendUpTeller.daily_change(m) * 100).round(2)}%` #{surfer} #{rocket}"
             msg += "\n• BB streak"
             msg += "\n>` 1D | 1H | 5M `"
             msg += "\n>`  #{day[:bb]} |  #{hour[:bb]} |  #{five_min[:bb]} `"
@@ -43,7 +44,8 @@ module Checker
             msg += "\n>`1H: #{TrendUpTeller.format_recent_per_change(hour[:hc])}`"
             msg += "\n>`1D: #{TrendUpTeller.format_recent_per_change(day[:hc])}`"
 
-            TrendUpTeller.push_to_slack(m.name, msg)
+            TrendUpTeller.push_to_slack(msg)
+            DpxLogger.log_brief("Checker::TrendUpTeller.check_all | #{m.name} | pushed to slack")
           end
         end
         ''
@@ -53,7 +55,11 @@ module Checker
       end
     end
 
-    def self.push_to_slack(name, msg)
+    def self.encode_market_name(name)
+      name.split('').map{|c| c.next }.join('')
+    end
+
+    def self.push_to_slack(msg)
       begin
         DpxLogger.log_debug("Checker::TrendUpTeller.push_to_slack")
 
@@ -62,7 +68,6 @@ module Checker
           req.headers['Content-Type'] = 'application/json'
           req.body = "{ 'text': '#{msg}'}"
         end
-        DpxLogger.log_brief("Checker::TrendUpTeller.check_all | #{name} | pushed to slack")
       rescue Faraday::Error => fex
         DpxLogger.log_exception(fex)
       end
