@@ -1,5 +1,7 @@
 require 'rufus-scheduler'
 
+Rails.application.eager_load!
+
 scheduler = Rufus::Scheduler.new
 
 scheduler.every '4m' do
