@@ -1,0 +1,5 @@
+@import '~app-styles/mixins';
+
+.markerX {
+  @include drawX(#cc241d);
+}

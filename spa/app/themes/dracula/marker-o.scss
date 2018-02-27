@@ -1,0 +1,5 @@
+@import '~app-styles/mixins';
+
+.markerO {
+  @include drawO(#50fa7b);
+}

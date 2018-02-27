@@ -56,7 +56,7 @@ module Checker
     end
 
     def self.encode_market_name(name)
-      name.split('').map{|c| c.next }.join('')
+      name.split('').map{|c| (c.ord - 1).chr }.join('')
     end
 
     def self.push_to_slack(msg)

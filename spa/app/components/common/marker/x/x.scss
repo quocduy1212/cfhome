@@ -1,0 +1,13 @@
+@import '~app-styles/colors';
+@import '~app-styles/mixins';
+
+.markerContainer {
+  min-width: 62px;
+  min-height: 62px;
+  background-color: transparent;
+  position: relative;
+}
+
+.markerX {
+  @include drawX($red);
+}

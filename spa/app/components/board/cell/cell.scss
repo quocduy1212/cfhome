@@ -1,0 +1,13 @@
+@import '~app-styles/colors';
+
+.cellContainer {
+  border: 1px solid $light-blue;
+  background-color: $white;
+}
+.empty {
+  cursor: pointer;
+  opacity: 0;
+  &:hover {
+    opacity: 0.2;
+  }
+}

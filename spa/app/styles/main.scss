@@ -1,0 +1,14 @@
+@import './colors';
+@import './variables';
+
+html,
+body {
+  background-color: $white;
+  color: $dark-gray;
+  font-family: $font-family;
+  font-weight: $regular-weight;
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
