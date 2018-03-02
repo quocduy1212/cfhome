@@ -2,14 +2,10 @@
   "name": "btrex",
   "version": "1.0.0",
   "main": "spa/app/main.jsx",
-  "engines": {
-    "node": "6.9.5"
-  },
   "scripts": {
     "postinstall": "npm run build",
     "dev-server": "node spa/server",
-    "build":
-      "rm -rf app/dist && webpack --config ./spa/webpack.production.config.js --progress --profile --colors",
+    "build": "rm -rf app/dist && webpack --config ./spa/webpack.production.config.js --progress --profile --colors",
     "test": "jest"
   },
   "jest": {
@@ -17,8 +13,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "jquery": "^3.1.1",
-    "lodash": "^4.17.4",
+    "humps": "^2.0.1",
+    "numeral": "^2.0.6",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-css-themr": "^2.1.2",
@@ -27,9 +23,10 @@
     "react-redux": "^5.0.5",
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.7",
-    "react-select": "^1.0.0-rc.5",
+    "react-select": "^1.2.1",
     "react-tooltip": "^3.3.0",
     "redux": "^3.7.1",
+    "redux-pack": "^0.1.5",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "tachyons-sass": "^4.7.4"

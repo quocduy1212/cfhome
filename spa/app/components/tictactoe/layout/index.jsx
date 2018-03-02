@@ -1,20 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
-import { themr } from 'react-css-themr';
-import StatusBar from 'app-comps/status-bar';
-import Board from 'app-comps/board';
-import styles from './layout.scss';
+import TopBar from 'app-comps/top-bar';
+import Content from 'app-comps/content';
+import './layout.scss';
 
-const GameLayout = ({ theme }) => (
-  <main className={theme.gameLayout}>
+const GameLayout = ({ className }) => (
+  <main className={className}>
     <ReactTooltip effect="solid" />
-    <StatusBar className="mb3" />
-    <Board />
+    <TopBar className="mv3 tc" />
+    <Content className="ph2 ph7-ns" />
   </main>
 );
 GameLayout.propTypes = {
-  theme: PropTypes.object.isRequired,
+  className: PropTypes.string,
 };
 
-export default themr('GameLayout', styles)(GameLayout);
+GameLayout.defaultProps = {
+  className: '',
+};
+
+export default GameLayout;

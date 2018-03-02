@@ -1,13 +1,11 @@
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
-import game from './game';
-import setting from './setting';
-import stats from './stats';
+import summary from './summary';
+import indicators from './indicators';
 
 const rootReducer = combineReducers({
-  game,
-  setting,
-  stats,
+  summary,
+  indicators,
   routing,
 });
 

@@ -1,9 +1,3 @@
-import X from './marker/x';
-import O from './marker/o';
-import Empty from './marker/empty';
+import LoadingEllipsis from './loading-ellipsis';
 
-export {
-  X,
-  O,
-  Empty,
-};
+export { LoadingEllipsis };

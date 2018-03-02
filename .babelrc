@@ -10,9 +10,8 @@
         "app-actions-types": "./spa/app/actions/types",
         "app-selectors": "./spa/app/selectors",
         "app-actions": "./spa/app/actions",
-        "app-game": "./spa/app/game",
-        "app-game-player-utils": "./spa/app/game/player-utils",
-        "app-game-constants": "./spa/app/game/constants",
+        "lib": "./spa/app/lib",
+        "app-utils": "./spa/app/utils",
       }
     }]
   ]

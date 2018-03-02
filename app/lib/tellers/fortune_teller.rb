@@ -78,18 +78,27 @@ module Tellers
       reversed_bb = []
       reversed_history = []
       i = 0
-      times = 0
+      above_upper = 0
+      above_middle = 0
 
       reversed_bb = @bb[interval].reverse
       reversed_history = @history[interval].reverse
       if reversed_bb.length > 0
         while reversed_history[i].open >= reversed_bb[i][1] || reversed_history[i].close >= reversed_bb[i][1] do
-          times = times + 1
+          above_upper = above_upper + 1
+          i = i + 1
+        end
+        i = 0
+        while reversed_history[i].open >= reversed_bb[i][0] && reversed_history[i].close >= reversed_bb[i][0] do
+          above_middle = above_middle + 1
           i = i + 1
         end
       end
 
-      times
+      {
+        upper: above_upper,
+        middle: above_middle,
+      }
     end
 
     def on_up_trend(interval = 'fiveMin')
@@ -117,7 +126,7 @@ module Tellers
       history.each_with_index do | t, i |
         if (i < history.length - 1)
           future = history[i+1]
-          result.push((((future.close - t.close)/t.close)*100).round(0))
+          result.push((future.close - t.close)/t.close)
         end
       end
       result

@@ -1,9 +1,3 @@
-export const PLACE_MARKER = 'PLACE_MARKER';
-export const UNDO = 'UNDO';
-export const REDO = 'REDO';
-export const EOG = 'EOG';
-export const INC_STATS = 'INC_STATS';
-export const DESC_STATS = 'DESC_STATS';
-export const NEW_GAME = 'NEW_GAME';
-export const CHANGE_THEME = 'CHANGE_THEME';
-
+export const LOAD_SUMMARY = 'LOAD_SUMMARY';
+export const LOAD_INDICATORS = 'LOAD_INDICATORS';
+export const LOAD_INDICATORS_MARKET = 'LOAD_INDICATORS_MARKET';
