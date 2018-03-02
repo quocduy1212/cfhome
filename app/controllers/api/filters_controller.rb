@@ -2,7 +2,7 @@ class Api::FiltersController < ApplicationController
   def summary
     begin
       result = MarketFilter.summary(params[:exchange], params[:btc], params[:usdt])
-      render json: { data: result[:data][1...5] }, status: :ok
+      render json: result, status: :ok
     rescue StandardError => ex
       DpxLogger.log_exception(ex)
       render json: { data: { error: ex } }, status: :ok
