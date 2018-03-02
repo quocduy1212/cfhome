@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { LoadingEllipsis } from 'app-comps-common';
-import { errorDetails, bellowBBUpperDetails } from 'app-utils';
+import {
+  errorDetails,
+  bellowBBUpperDetails,
+  aboveBBMiddleOnAllDetails,
+  aboveBBMiddleOnHourFiveMinDetails,
+  belowBBMiddleOnAllIntervalDetails,
+  downOnAllIntervalDetails,
+  upOnAllIntervalDetails,
+  upOnHourFiveMinIntervalDetails,
+} from 'app-utils';
 import MarketIndicatorsBB from './market-indicators-bb';
 import MarketIndicatorsUpTrend from './market-indicators-uptrend';
 import './content.scss';
@@ -32,7 +41,43 @@ class Content extends Component {
       reordered = [...first, ...middle, ...last];
       MarketIndicatorsComp = MarketIndicatorsBB;
     } else {
-      reordered = processed;
+      const last = [];
+      const allUp = [];
+      const allAboveAndAllUp = [];
+      const allAbove = [];
+      const mixed = [];
+      processed.forEach(m => {
+        if (aboveBBMiddleOnAllDetails(m.details) && upOnAllIntervalDetails(m.details)) {
+          allAboveAndAllUp.push(m);
+        } else if (upOnAllIntervalDetails(m.details) && !belowBBMiddleOnAllIntervalDetails(m.details)) {
+          allUp.push(m);
+        } else if (aboveBBMiddleOnAllDetails(m.details) && !downOnAllIntervalDetails(m.details)) {
+          allAbove.push(m);
+        } else if (belowBBMiddleOnAllIntervalDetails(m.details) || downOnAllIntervalDetails(m.details)) {
+          last.push({ ...m, hide: true });
+        } else {
+          mixed.push(m);
+        }
+      });
+      const mixedFirst = [];
+      const mixedSecond = [];
+      const mixedLast = [];
+      mixed.forEach(m => {
+        if (aboveBBMiddleOnHourFiveMinDetails(m.details)) {
+          mixedFirst.push(m);
+        } else if (upOnHourFiveMinIntervalDetails(m.details)) {
+          mixedSecond.push(m);
+        } else {
+          mixedLast.push({ ...m, hide: true });
+        }
+      });
+      reordered = [
+        ...allAboveAndAllUp,
+        ...allUp,
+        ...allAbove,
+        ...[...mixedFirst, ...mixedSecond, ...mixedLast],
+        ...last,
+      ];
       MarketIndicatorsComp = MarketIndicatorsUpTrend;
     }
     return reordered.map(r => <MarketIndicatorsComp key={r.name} className="mt4 animated fadeInDown" {...r} />);
@@ -45,9 +90,7 @@ class Content extends Component {
     const activeModeClass = 'bb b--blue bw2';
     return (
       <section className={`${className}`}>
-        {loadingMessage && <LoadingEllipsis text={loadingMessage} />}
-        <hr className="bt b--gray mt4" />
-        <div className="tc mt4">
+        <div className="tr mt4">
           <span
             className={`dib f4 pointer ${mode === 'bb' ? activeModeClass : ''}`}
             onClick={() => this.setState({ mode: 'bb' })}
@@ -61,6 +104,7 @@ class Content extends Component {
             Up Trend
           </span>
         </div>
+        {loadingMessage && <LoadingEllipsis className="mt4" text={loadingMessage} />}
         {this.renderContent(indicators.processed)}
       </section>
     );

@@ -8,8 +8,9 @@ import './layout.scss';
 const GameLayout = ({ className }) => (
   <main className={className}>
     <ReactTooltip effect="solid" />
-    <TopBar className="mv3 tc" />
-    <Content className="ph2 ph7-ns" />
+    <TopBar className="mv3" />
+    <hr className="bt b--light-gray mt3" />
+    <Content className="ph2 ph7-ns ph4-m" />
   </main>
 );
 GameLayout.propTypes = {

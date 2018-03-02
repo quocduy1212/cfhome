@@ -60,10 +60,10 @@ class TopBar extends Component {
     const { className, isProcessing } = this.props;
     const { exchange, btc, usdt } = this.state;
     return (
-      <header className={className}>
+      <header className={`${className} ph5 ph0-ns tc-ns`}>
         <Select
           name="form-field-name"
-          className={`${styles.exchangeSelector} dib`}
+          className={`${styles.exchangeSelector} db dib-ns tl`}
           value={exchange}
           onChange={filterObj => this.setState({ exchange: filterObj.value })}
           options={CRYPTO_EXCHANGE}
@@ -73,7 +73,7 @@ class TopBar extends Component {
         />
         <Select
           name="form-field-name"
-          className={`${styles.dailyChangeSelector} dib ml4`}
+          className={`${styles.dailyChangeSelector} db dib-ns tl ml4-ns mt2 mt0-ns`}
           value={btc}
           onChange={filterObj => this.setState({ btc: filterObj.value })}
           options={DAILY_CHANGES}
@@ -83,7 +83,7 @@ class TopBar extends Component {
         />
         <Select
           name="form-field-name"
-          className={`${styles.dailyChangeSelector} dib ml4`}
+          className={`${styles.dailyChangeSelector} db dib-ns tl ml4-ns mt2 mt0-ns`}
           value={usdt}
           onChange={filterObj => this.setState({ usdt: filterObj.value })}
           options={DAILY_CHANGES}
@@ -91,7 +91,10 @@ class TopBar extends Component {
           searchable={false}
           optionClassName="tc"
         />
-        <span className={`ml4 ${isProcessing ? 'light-gray' : 'pointer'}`} onClick={this.onFiltering}>
+        <span
+          className={`db dib-ns ml4-ns mt4 mt0-ns ${isProcessing ? 'light-gray' : 'pointer'}`}
+          onClick={this.onFiltering}
+        >
           <i className="material-icons f2">play_arrow</i>
           <i className="material-icons f2 nl3">play_arrow</i>
         </span>
