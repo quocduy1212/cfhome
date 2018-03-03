@@ -9,12 +9,18 @@ class MarketFilter
     five_min = teller.five_min_teller
     hour = teller.hour_teller
     day = teller.day_teller
+    five_min_history = teller.history
+    hour_history = teller.history('hour')
+    day_history = teller.history('day')
 
     DpxLogger.log_brief("MarketFilter::indicators | #{market_name} | done")
     {
       five_min: five_min,
       hour: hour,
-      day: day
+      day: day,
+      five_min_history: five_min_history,
+      hour_history: hour_history,
+      day_history: day_history,
     }
   end
 

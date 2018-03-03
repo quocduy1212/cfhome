@@ -7,7 +7,7 @@ const toPercentage = dotPercentage => `${dotPercentage > 0 ? '+' : ''}${numeral(
 const toPercentageNoDecimal = dotPercentage =>
   `${dotPercentage > 0 ? '+' : ''}${numeral(dotPercentage * 100).format('0')}%`;
 
-const MarketIndicatorsBB = ({ className, name, dailyChange, details: { error, fiveMin, hour, day } }) => {
+const MarketIndicatorsBB = ({ className, children, name, dailyChange, details: { error, fiveMin, hour, day } }) => {
   const hide = bellowBBUpper(fiveMin, hour, day);
   const content = !error && !hide;
   return (
@@ -72,6 +72,7 @@ const MarketIndicatorsBB = ({ className, name, dailyChange, details: { error, fi
           </tbody>
         </table>
       )}
+      {children}
     </div>
   );
 };

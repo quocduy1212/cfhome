@@ -7,7 +7,7 @@ const toPercentage = dotPercentage => `${dotPercentage > 0 ? '+' : ''}${numeral(
 const toPercentageNoDecimal = dotPercentage =>
   `${dotPercentage > 0 ? '+' : ''}${numeral(dotPercentage * 100).format('0')}%`;
 
-const MarketIndicatorsUpTrend = ({ className, name, dailyChange, details: { error, fiveMin, hour, day } }) => {
+const MarketIndicatorsUpTrend = ({ className, childre, name, dailyChange, details: { error, fiveMin, hour, day } }) => {
   const downTrend = downOnAllInterval(fiveMin, hour, day) || belowBBMiddleOnAllInterval(fiveMin, hour, day);
   const content = !error && !downTrend;
   return (
@@ -72,6 +72,7 @@ const MarketIndicatorsUpTrend = ({ className, name, dailyChange, details: { erro
           </tbody>
         </table>
       )}
+      {children}
     </div>
   );
 };

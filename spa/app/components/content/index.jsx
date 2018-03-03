@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { LoadingEllipsis } from 'app-comps-common';
+import { LoadingEllipsis, AreaSpline } from 'app-comps-common';
 import { orderedData } from 'app-selectors/indicators';
 import { indicatorsSettingChange } from 'app-actions/settings';
 import MarketIndicatorsBB from './market-indicators-bb';
@@ -25,7 +25,15 @@ class Content extends Component {
     } else {
       MarketIndicatorsComp = MarketIndicatorsUpTrend;
     }
-    return reordered.map(r => <MarketIndicatorsComp key={r.name} className="mt4 animated fadeInDown" {...r} />);
+    return reordered.map(r => (
+      <MarketIndicatorsComp key={r.name} className="mt4 animated fadeInDown" {...r}>
+        <div className="cf">
+          <AreaSpline className="fl w-third" data={r.details.dayHistory.map(h => h.close)} />
+          <AreaSpline className="fl w-third" data={r.details.hourHistory.map(h => h.close)} />
+          <AreaSpline className="fl w-third" data={r.details.fiveMinHistory.map(h => h.close)} />
+        </div>
+      </MarketIndicatorsComp>
+    ));
   };
 
   render() {

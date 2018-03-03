@@ -12,6 +12,7 @@
     "testRegex": "(/__tests__/.*)\\.jsx?$"
   },
   "dependencies": {
+    "c3": "^0.4.21",
     "classnames": "^2.2.5",
     "humps": "^2.0.1",
     "numeral": "^2.0.6",

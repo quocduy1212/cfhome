@@ -11,6 +11,10 @@ module Tellers
       @bb = {}
     end
 
+    def history(interval = 'fiveMin')
+      @history[interval] || []
+    end
+
     def five_min_teller
       begin
         DpxLogger.log_debug("#{@market_name} | five_min_teller")
