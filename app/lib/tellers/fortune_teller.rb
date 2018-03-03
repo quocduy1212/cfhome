@@ -80,12 +80,12 @@ module Tellers
       reversed_bb = @bb[interval].reverse
       reversed_history = @history[interval].reverse
       if reversed_bb.length > 0
-        while reversed_history[i].open >= reversed_bb[i][1] || reversed_history[i].close >= reversed_bb[i][1] do
+        while reversed_bb[i] && reversed_history[i].open >= reversed_bb[i][1] || reversed_history[i].close >= reversed_bb[i][1] do
           above_upper = above_upper + 1
           i = i + 1
         end
         i = 0
-        while reversed_history[i].open >= reversed_bb[i][0] && reversed_history[i].close >= reversed_bb[i][0] do
+        while reversed_bb[i] && reversed_history[i].open >= reversed_bb[i][0] && reversed_history[i].close >= reversed_bb[i][0] do
           above_middle = above_middle + 1
           i = i + 1
         end
