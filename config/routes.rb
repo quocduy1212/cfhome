@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
-    get 'filters/indicators/:market_name', to: 'filters#indicators'
+    get 'filters/indicators', to: 'filters#indicators'
     get 'filters/summary'
   end
 

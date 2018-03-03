@@ -3,11 +3,11 @@ import { INDICATORS_SETTINGS_CHANGE } from 'app-actions-types';
 const CRYPTO_EXCHANGE = [{ value: 'bittrex', label: 'Bittrex' }, { value: 'binance', label: 'Binance' }];
 const CRYPTO_EXCHANGE_DEFAULT = CRYPTO_EXCHANGE[0];
 const DAILY_CHANGES = [
-  { value: '0.01', label: '1%' },
-  { value: '0.02', label: '2%' },
-  { value: '0.03', label: '3%' },
-  { value: '0.05', label: '5%' },
-  { value: '0.1', label: '10%' },
+  { value: '1', label: '1%' },
+  { value: '2', label: '2%' },
+  { value: '3', label: '3%' },
+  { value: '5', label: '5%' },
+  { value: '10', label: '10%' },
 ];
 const BTC_DAILY_CHANGE_DEFAULT = DAILY_CHANGES[3];
 const USDT_DAILY_CHANGE_DEFAULT = DAILY_CHANGES[1];

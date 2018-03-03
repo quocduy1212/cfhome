@@ -3,21 +3,18 @@ module Tellers
     HISTORY_MAX_TICKS = 50
     HISTORY_PERCENTAGE_CHANGE = 6
 
-    attr_reader :market_name, :history, :bb
+    attr_reader :base, :symbol, :history, :bb
 
-    def initialize(market_name)
-      @market_name = market_name
+    def initialize(exchange, base, symbol)
+      @exchange = exchange
+      @base = base
+      @symbol = symbol
       @history = {}
       @bb = {}
     end
 
-    def history(interval = 'fiveMin')
-      @history[interval] || []
-    end
-
     def five_min_teller
       begin
-        DpxLogger.log_debug("#{@market_name} | five_min_teller")
         load_history
         calc_bb_indicator
         bb = on_bb_upper
@@ -25,14 +22,13 @@ module Tellers
         hc = recent_history_percentage_change
         { bb: bb, up: up, hc: hc }
       rescue StandardError => ex
-        DpxLogger.log_exception(ex, @market_name)
+        DpxLogger.log_exception(ex)
         { bb: 0, up: 0, hc: [] }
       end
     end
 
     def hour_teller
       begin
-        DpxLogger.log_debug("#{@market_name} | hour_teller")
         load_history('hour')
         calc_bb_indicator('hour')
         bb = on_bb_upper('hour')
@@ -40,14 +36,13 @@ module Tellers
         hc = recent_history_percentage_change('hour')
         { bb: bb, up: up, hc: hc }
       rescue StandardError => ex
-        DpxLogger.log_exception(ex, @market_name)
+        DpxLogger.log_exception(ex)
         { bb: 0, up: 0, hc: [] }
       end
     end
 
     def day_teller
       begin
-        DpxLogger.log_debug("#{@market_name} | day_teller")
         load_history('day')
         calc_bb_indicator('day')
         bb = on_bb_upper('day')
@@ -55,20 +50,18 @@ module Tellers
         hc = recent_history_percentage_change('day')
         { bb: bb, up: up, hc: hc }
       rescue StandardError => ex
-        DpxLogger.log_exception(ex, @market_name)
+        DpxLogger.log_exception(ex)
         { bb: 0, up: 0, hc: [] }
       end
     end
 
     def load_history(interval = 'fiveMin')
-      DpxLogger.log_debug("#{@market_name} | load_history")
-      history = BittrexProvider::Historical.get(@market_name, interval)
+      history = CryptoProvider.history(@exchange, @base, @symbol, interval)
       max_ticks = history.length > HISTORY_MAX_TICKS ? HISTORY_MAX_TICKS : history.length
       @history[interval] = history[(max_ticks * -1)..-1]
     end
 
     def calc_bb_indicator(interval = 'fiveMin')
-      DpxLogger.log_debug("#{@market_name} | calc_bb_indicator")
       if (@history[interval].length > 20)
         bb_data = Indicators::Data.new(@history[interval].map{ |t| t.close })
         @bb[interval] = bb_data.calc(:type => :bb, :params => [20,2]).output
@@ -78,7 +71,6 @@ module Tellers
     end
 
     def on_bb_upper(interval = 'fiveMin')
-      DpxLogger.log_debug("#{@market_name} | on_bb_upper")
       reversed_bb = []
       reversed_history = []
       i = 0
@@ -106,7 +98,6 @@ module Tellers
     end
 
     def on_up_trend(interval = 'fiveMin')
-      DpxLogger.log_debug("#{@market_name} | on_up_trend")
       reversed_history = []
       i = 0
       times = 0
@@ -121,8 +112,6 @@ module Tellers
     end
 
     def recent_history_percentage_change(interval = 'fiveMin')
-      DpxLogger.log_debug("#{@market_name} | recent_history_percentage_change")
-
       result = []
       history = @history[interval]
       max_ticks = history.length > HISTORY_PERCENTAGE_CHANGE ? HISTORY_PERCENTAGE_CHANGE : history.length
@@ -130,7 +119,7 @@ module Tellers
       history.each_with_index do | t, i |
         if (i < history.length - 1)
           future = history[i+1]
-          result.push((future.close - t.close)/t.close)
+          result.push(((future.close - t.close) / t.close) * 100)
         end
       end
       result

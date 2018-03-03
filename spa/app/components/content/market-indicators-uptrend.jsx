@@ -3,9 +3,8 @@ import numeral from 'numeral';
 import { belowBBMiddleOnAllInterval, downOnAllInterval } from 'app-utils';
 
 const twoDecimals = number => numeral(number).format('00');
-const toPercentage = dotPercentage => `${dotPercentage > 0 ? '+' : ''}${numeral(dotPercentage * 100).format('0.00')}%`;
-const toPercentageNoDecimal = dotPercentage =>
-  `${dotPercentage > 0 ? '+' : ''}${numeral(dotPercentage * 100).format('0')}%`;
+const toPercentage = dotPercentage => `${dotPercentage > 0 ? '+' : ''}${numeral(dotPercentage).format('0.00')}%`;
+const toPercentageNoDecimal = dotPercentage => `${dotPercentage > 0 ? '+' : ''}${numeral(dotPercentage).format('0')}%`;
 
 const MarketIndicatorsUpTrend = ({
   className,
