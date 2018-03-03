@@ -13,7 +13,7 @@ module BittrexProvider
       connection = Faraday.new(:url => HOST + "marketName=#{market_name}&tickInterval=#{tick_interval}&_=#{nonce}")
       response = connection.get
       body = JSON.parse(response.body)['result']
-      result = body.present? ? body.map{|t| Model::Tick.new(t)} : []
+      result = body.present? ? body.map{|t| Tick.new(t)} : []
 
       DpxLogger.log_debug("#{market_name} | Historical.get | #{response.status} | #{body.present? ? body.length : -1} ticks")
       if (response.status != 200)
