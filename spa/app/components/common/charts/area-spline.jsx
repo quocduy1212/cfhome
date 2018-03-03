@@ -16,6 +16,8 @@ class AreaSpline extends Component {
         },
         y: {
           show: false,
+          min: Math.min(...this.props.data),
+          max: Math.max(...this.props.data),
         },
       },
       legend: { show: false },
