@@ -9,7 +9,9 @@ const getLoadingMessage = (summary, { isProcessingCurrent, queue, processed, cur
   if (summary.isLoading) {
     return 'Loading | Summary';
   } else if (isProcessingCurrent) {
-    return `Loading | Indicators | ${processed.length + 1}/${processed.length + queue.length + 1} | ${current.name}`;
+    return `Loading | ${processed.length + 1}/${processed.length + queue.length + 1} | ${current.name} | ${
+      current.exchange
+    }`;
   }
   return '';
 };

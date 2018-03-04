@@ -22,7 +22,7 @@ const bbDetails = (state = DEFAULT_STATE, action) => {
           ...prevState,
           isProcessingCurrent: true,
           current: meta.market,
-          queue: prevState.queue.filter(m => m.name !== meta.market.name),
+          queue: prevState.queue.filter(m => `${m.name}${m.exchange}` !== `${meta.market.name}${meta.market.exchange}`),
         }),
         finish: prevState => ({
           ...prevState,

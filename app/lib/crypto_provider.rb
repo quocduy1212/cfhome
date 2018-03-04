@@ -4,28 +4,19 @@ class CryptoProvider
     'hour' => '1h',
     'day' => '1d'
   }
+  BITTREX = 'bittrex'
+  BINANCE = 'binance'
+  EXCHANGE_LIST = [BITTREX,BINANCE]
   def self.summary(exchange)
     begin
       if exchange == 'bittrex'
-        markets = BittrexProvider::Summary.all
-        markets.map{|m| MarketSummary.new({
-          exchange: exchange,
-          base: m.name.split('-')[0],
-          symbol: m.name.split('-')[1],
-          daily_change: ((m.last - m.previous_day) / m.previous_day) * 100,
-          volume: m.volume,
-          base_volume: m.base_volume
-        })}
+        CryptoProvider.summary_bittrex
       elsif exchange == 'binance'
-        markets = BinanceProvider::Client::REST.new.twenty_four_hour({})
-        markets.map{|m| MarketSummary.new({
-          exchange: exchange,
-          base: CryptoProvider.resolve_binance_symbol(m['symbol'])[:base],
-          symbol: CryptoProvider.resolve_binance_symbol(m['symbol'])[:symbol],
-          daily_change: m['priceChangePercent'],
-          volume: m['volume'],
-          base_volume: m['quoteVolume']
-        })}
+        CryptoProvider.summary_binance
+      elsif exchange == 'all'
+        bittrexMarkets = CryptoProvider.summary_bittrex
+        binanceMarkets = CryptoProvider.summary_binance
+        (bittrexMarkets + binanceMarkets)
       else
         []
       end
@@ -78,7 +69,28 @@ class CryptoProvider
       []
     end
   end
-
+  def self.summary_bittrex
+    markets = BittrexProvider::Summary.all
+    markets.map{|m| MarketSummary.new({
+      exchange: BITTREX,
+      base: m.name.split('-')[0],
+      symbol: m.name.split('-')[1],
+      daily_change: ((m.last - m.previous_day) / m.previous_day) * 100,
+      volume: m.volume,
+      base_volume: m.base_volume
+    })}
+  end
+  def self.summary_binance
+    markets = BinanceProvider::Client::REST.new.twenty_four_hour({})
+    markets.map{|m| MarketSummary.new({
+      exchange: BINANCE,
+      base: CryptoProvider.resolve_binance_symbol(m['symbol'])[:base],
+      symbol: CryptoProvider.resolve_binance_symbol(m['symbol'])[:symbol],
+      daily_change: m['priceChangePercent'],
+      volume: m['volume'],
+      base_volume: m['quoteVolume']
+    })}
+  end
   def self.resolve_binance_symbol(symbol)
     if symbol.end_with?('BTC')
       { base: 'BTC', symbol: symbol.split('BTC')[0] }

@@ -1,6 +1,10 @@
 import { GLOBAL_SETTINGS_CHANGE, INDICATORS_SETTINGS_CHANGE } from 'app-actions-types';
 
-const CRYPTO_EXCHANGE = [{ value: 'bittrex', label: 'Bittrex' }, { value: 'binance', label: 'Binance' }];
+const CRYPTO_EXCHANGE = [
+  { value: 'all', label: 'All' },
+  { value: 'bittrex', label: 'Bittrex' },
+  { value: 'binance', label: 'Binance' },
+];
 const CRYPTO_EXCHANGE_DEFAULT = CRYPTO_EXCHANGE[0];
 const DAILY_CHANGES = [
   { value: '1', label: '1%' },

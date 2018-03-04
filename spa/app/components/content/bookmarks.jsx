@@ -8,7 +8,7 @@ import BookmarkList from './bookmark-list';
 
 const getLoadingMessage = ({ isProcessingCurrent, queue, processed, current }) =>
   isProcessingCurrent
-    ? `Loading | Indicators | ${processed.length + 1}/${processed.length + queue.length + 1} | ${current.name}`
+    ? `Loading | ${processed.length + 1}/${processed.length + queue.length + 1} | ${current.name} | ${current.exchange}`
     : '';
 
 const Content = props =>
