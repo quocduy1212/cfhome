@@ -1,3 +1,10 @@
+import numeral from 'numeral';
+
+export const twoDecimals = number => numeral(number).format('00');
+export const toPercentage = dotPercentage => `${dotPercentage > 0 ? '+' : ''}${numeral(dotPercentage).format('0.00')}%`;
+export const toPercentageNoDecimal = dotPercentage =>
+  `${dotPercentage > 0 ? '+' : ''}${numeral(dotPercentage).format('0')}%`;
+
 export const bellowBBUpper = (fiveMin, hour, day) => fiveMin.bb.upper <= 0 && hour.bb.upper <= 0 && day.bb.upper <= 0;
 export const bellowBBUpperDetails = ({ fiveMin, hour, day }) => bellowBBUpper(fiveMin, hour, day);
 export const aboveBBUpperOnAllDetails = ({ fiveMin, hour, day }) =>

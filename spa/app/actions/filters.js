@@ -1,12 +1,11 @@
 import api from 'lib/api';
 import { LOAD_SUMMARY, LOAD_INDICATORS, LOAD_INDICATORS_MARKET } from 'app-actions-types';
-import { indicatorsSettings } from 'app-selectors/settings';
 
 export const loadIndicatorsForMarket = market => (dispatch, getState) => {
   dispatch({
     type: LOAD_INDICATORS_MARKET,
     promise: api.get('/api/filters/indicators', {
-      exchange: indicatorsSettings(getState()).exchange,
+      exchange: market.exchange,
       base: market.base,
       symbol: market.symbol,
     }),

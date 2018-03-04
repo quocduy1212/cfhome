@@ -5,7 +5,7 @@ import { filterBySummary } from 'app-actions/filters';
 import { indicatorsSettingChange } from 'app-actions/settings';
 import styles from './top-bar.scss';
 
-class TopBar extends Component {
+class CryptoFilter extends Component {
   onFiltering = () => {
     const { isProcessing, settings } = this.props;
     const { exchange, btc, usdt } = settings.indicators;
@@ -72,4 +72,4 @@ const mapDispatchToProps = {
   indicatorsSettingChange,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TopBar);
+export default connect(mapStateToProps, mapDispatchToProps)(CryptoFilter);

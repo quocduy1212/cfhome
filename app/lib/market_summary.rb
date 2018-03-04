@@ -1,7 +1,8 @@
 class MarketSummary
-  attr_reader :name, :base, :symbol, :daily_change, :volume, :base_volume
+  attr_reader :exchange, :name, :base, :symbol, :daily_change, :volume, :base_volume
 
   def initialize(attrs = {})
+    @exchange = attrs[:exchange]
     @base = attrs[:base]
     @symbol = attrs[:symbol]
     @daily_change = attrs[:daily_change].to_f
