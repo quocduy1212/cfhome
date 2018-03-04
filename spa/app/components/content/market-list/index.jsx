@@ -30,7 +30,7 @@ const Content = ({
     {loadingMessage && <LoadingEllipsis className="mt4" text={loadingMessage} />}
     {reordered.map(r => (
       <MarketDetails
-        key={r.name}
+        key={`${r.name}${r.exchange}`}
         className="mt4 animated fadeInDown"
         {...r}
         onAddBookmark={() => onAddBookmark({ name: r.name, exchange: r.exchange, base: r.base, symbol: r.symbol })}
