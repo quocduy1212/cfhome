@@ -6,7 +6,7 @@ const IndicatorsLoader = ({ className, isProcessing, emptyBookmarkList, onFilter
   <header className={`${className} ph5 ph0-ns tc-ns`}>
     <span
       className={`db dib-ns ml4-ns mt4 mt0-ns ${isProcessing || emptyBookmarkList ? 'light-gray' : 'pointer'}`}
-      onClick={onFiltering}
+      onClick={() => !isProcessing && onFiltering()}
     >
       <i className="material-icons f2">play_arrow</i>
       <i className="material-icons f2 nl3">play_arrow</i>

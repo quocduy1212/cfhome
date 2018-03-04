@@ -52,7 +52,7 @@ class CryptoFilter extends Component {
         />
         <span
           className={`db dib-ns ml4-ns mt4 mt0-ns ${isProcessing ? 'light-gray' : 'pointer'}`}
-          onClick={this.onFiltering}
+          onClick={() => !isProcessing && this.onFiltering()}
         >
           <i className="material-icons f2">play_arrow</i>
           <i className="material-icons f2 nl3">play_arrow</i>
