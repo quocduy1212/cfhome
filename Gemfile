@@ -37,6 +37,8 @@ gem 'indicators'
 gem 'securities'
 gem 'rufus-scheduler'
 gem 'rest-client'
+gem 'addressable'
+gem 'openssl'
 
 group :development, :test do
   gem 'sqlite3'
