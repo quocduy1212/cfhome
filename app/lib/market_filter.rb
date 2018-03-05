@@ -30,7 +30,7 @@ class MarketFilter
     btc_change = btc_change.present? ? btc_change.to_f : BTC_24H_CHANGE
     usdt_change = usdt_change.present? ? usdt_change.to_f : USDT_24H_CHANGE
 
-    markets = CryptoProvider.summary(exchange)
+    markets = CryptoProvider::FacadeProvider.summary(exchange)
     btc_all = markets.select{|m| m.base == 'BTC' }.sort{|x, y| y.base_volume <=> x.base_volume}
     btc = btc_all[0..btc_all.length/3].select{ | m | m.daily_change >= btc_change }
     usdt_all = markets.select{|m| m.base == 'USDT' }

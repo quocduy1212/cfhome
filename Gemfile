@@ -36,6 +36,7 @@ gem 'faraday_middleware'
 gem 'indicators'
 gem 'securities'
 gem 'rufus-scheduler'
+gem 'rest-client'
 
 group :development, :test do
   gem 'sqlite3'

@@ -56,7 +56,7 @@ module Tellers
     end
 
     def load_history(interval = 'fiveMin')
-      history = CryptoProvider.history(@exchange, @base, @symbol, interval)
+      history = CryptoProvider::FacadeProvider.history(@exchange, @base, @symbol, interval)
       max_ticks = history.length > HISTORY_MAX_TICKS ? HISTORY_MAX_TICKS : history.length
       @history[interval] = history[(max_ticks * -1)..-1]
     end
