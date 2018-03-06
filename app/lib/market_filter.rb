@@ -9,9 +9,12 @@ class MarketFilter
     five_min = teller.five_min_teller
     hour = teller.hour_teller
     day = teller.day_teller
-    five_min_history = teller.history['fiveMin']
-    hour_history = teller.history['hour']
-    day_history = teller.history['day']
+    five_min_history = teller.last_xx_ticks('fiveMin')
+    hour_history = teller.last_xx_ticks('hour')
+    day_history = teller.last_xx_ticks('day')
+    five_min_bb = teller.last_xx_bb('fiveMin')
+    hour_bb = teller.last_xx_bb('hour')
+    day_bb = teller.last_xx_bb('day')
 
     DpxLogger.log_brief("MarketFilter::indicators | #{exchange} | #{symbol} | #{base} | done")
     {
@@ -21,6 +24,9 @@ class MarketFilter
       five_min_history: five_min_history,
       hour_history: hour_history,
       day_history: day_history,
+      five_min_bb: five_min_bb,
+      hour_bb: hour_bb,
+      day_bb: day_bb,
     }
   end
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MarketBriefChart } from 'app-comps-common';
+import { MarketBBChart } from 'app-comps-common';
 import BBAll from '../tables/bb-all';
 import HistoryChange from '../tables/history-change';
 import MarketInfo from './market-info';
@@ -12,7 +12,7 @@ const MarketDetails = ({
   bookmarked,
   onAddBookmark,
   onRemoveBookmark,
-  details: { error, fiveMin, hour, day, fiveMinHistory, hourHistory, dayHistory },
+  details: { error, fiveMin, hour, day, fiveMinHistory, hourHistory, dayHistory, fiveMinBb, hourBb, dayBb },
   hide,
 }) => {
   const content = !error && !hide;
@@ -30,11 +30,14 @@ const MarketDetails = ({
       {hide && <div className="ba br2 b--orange pv2 ph3 f6 mt2 orange">{hide}</div>}
       {content && <BBAll className="mt2" day={day} hour={hour} fiveMin={fiveMin} />}
       {content && <HistoryChange className="mt2" day={day} hour={hour} fiveMin={fiveMin} />}
-      <MarketBriefChart
+      <MarketBBChart
         className="cf"
         dayHistory={dayHistory}
         hourHistory={hourHistory}
         fiveMinHistory={fiveMinHistory}
+        fiveMinBb={fiveMinBb}
+        hourBb={hourBb}
+        dayBb={dayBb}
       />
     </div>
   );

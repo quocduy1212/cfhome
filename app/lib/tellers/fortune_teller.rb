@@ -1,6 +1,7 @@
 module Tellers
   class FortuneTeller
-    HISTORY_MAX_TICKS = 50
+    HISTORY_MAX_TICKS = 100
+    XX_TICKS = 50
     HISTORY_PERCENTAGE_CHANGE = 6
 
     attr_reader :base, :symbol, :history, :bb
@@ -109,6 +110,18 @@ module Tellers
       end
 
       times
+    end
+
+    def last_xx_ticks(interval = 'fiveMin')
+      history = @history[interval]
+      max_ticks = history.length > XX_TICKS ? XX_TICKS : history.length
+      history[(max_ticks * -1)..-1]
+    end
+
+    def last_xx_bb(interval = 'fiveMin')
+      bb = @bb[interval]
+      max_ticks = bb.length > XX_TICKS ? XX_TICKS : bb.length
+      bb[(max_ticks * -1)..-1]
     end
 
     def recent_history_percentage_change(interval = 'fiveMin')
