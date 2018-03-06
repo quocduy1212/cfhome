@@ -126,7 +126,7 @@ module CryptoProvider
         exchange: POLONIEX,
         base: m['symbol'].split('_')[0],
         symbol: m['symbol'].split('_')[1],
-        daily_change: m['percentChange'],
+        daily_change: m['percentChange'] * 100,
         volume: m['quoteVolume'],
         base_volume: m['baseVolume']
       })}
