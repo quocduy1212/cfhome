@@ -28,7 +28,7 @@ const DEFAULT_STATE = {
     CRYPTO_EXCHANGE,
   },
   page: 'indicators',
-  displayMode: 'bb',
+  displayMode: 'up_trend',
 };
 
 const settings = (state = DEFAULT_STATE, action) => {

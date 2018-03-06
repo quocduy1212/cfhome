@@ -15,16 +15,16 @@ const Content = ({
   <section className={`${className}`}>
     <div className="tr mt4 mr3">
       <span
-        className={`dib f4 pointer ${displayMode === 'bb' ? activeModeClass : ''}`}
-        onClick={() => onDisplayModeChange({ displayMode: 'bb' })}
-      >
-        BB
-      </span>
-      <span
-        className={`dib f4 ml4 pointer ${displayMode === 'up_trend' ? activeModeClass : ''}`}
+        className={`dib f4 pointer ${displayMode === 'up_trend' ? activeModeClass : ''}`}
         onClick={() => onDisplayModeChange({ displayMode: 'up_trend' })}
       >
         Up Trend
+      </span>
+      <span
+        className={`dib f4 ml4 pointer ${displayMode === 'bb' ? activeModeClass : ''}`}
+        onClick={() => onDisplayModeChange({ displayMode: 'bb' })}
+      >
+        BB
       </span>
     </div>
     {loadingMessage && <LoadingEllipsis className="mt4" text={loadingMessage} />}
