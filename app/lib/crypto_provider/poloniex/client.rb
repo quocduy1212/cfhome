@@ -27,6 +27,18 @@ module CryptoProvider
         res = get 'returnChartData', currencyPair: currency_pair, period: 86400,  start: 0, :end => Time.now.to_i
       end
 
+      def self.get_day_ticks( currency_pair, limit = 100 )
+        res = get 'returnChartData', currencyPair: currency_pair, period: 86400,  start: limit.day.ago.to_i, end: Time.now.to_i
+      end
+
+      def self.get_half_hour_ticks( currency_pair, limit = 100 )
+        res = get 'returnChartData', currencyPair: currency_pair, period: 1800,  start: (limit * 30).minute.ago.to_i, end: Time.now.to_i
+      end
+
+      def self.get_five_min_ticks( currency_pair, limit = 100 )
+        res = get 'returnChartData', currencyPair: currency_pair, period: 300,  start: (limit * 5).minute.ago.to_i, end: Time.now.to_i
+      end
+
       def self.ticker
         get 'returnTicker'
       end

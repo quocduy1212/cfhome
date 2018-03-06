@@ -4,6 +4,7 @@ const CRYPTO_EXCHANGE = [
   { value: 'all', label: 'All' },
   { value: 'bittrex', label: 'Bittrex' },
   { value: 'binance', label: 'Binance' },
+  { value: 'poloniex', label: 'Poloniex' },
 ];
 const CRYPTO_EXCHANGE_DEFAULT = CRYPTO_EXCHANGE[0];
 const DAILY_CHANGES = [

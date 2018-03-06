@@ -7,16 +7,20 @@ module CryptoProvider
     }
     BITTREX = 'bittrex'
     BINANCE = 'binance'
-    EXCHANGE_LIST = [BITTREX,BINANCE]
+    POLONIEX = 'poloniex'
+    EXCHANGE_LIST = [BITTREX,BINANCE, POLONIEX]
     def self.summary(exchange)
       begin
-        if exchange == 'bittrex'
+        if exchange == BITTREX
           FacadeProvider.summary_bittrex
-        elsif exchange == 'binance'
+        elsif exchange == BINANCE
           FacadeProvider.summary_binance
+        elsif exchange == POLONIEX
+          FacadeProvider.summary_poloniex
         elsif exchange == 'all'
           bittrexMarkets = FacadeProvider.summary_bittrex
           binanceMarkets = FacadeProvider.summary_binance
+          # poloniexMarkets = FacadeProvider.summary_poloniex
           (bittrexMarkets + binanceMarkets)
         else
           []
@@ -29,9 +33,9 @@ module CryptoProvider
 
     def self.history(exchange, base, symbol, interval)
       begin
-        if (exchange == 'bittrex')
+        if (exchange == BITTREX)
           CryptoProvider::Bittrex::Historical.get([base, symbol].join('-'), interval)
-        elsif exchange == 'binance'
+        elsif exchange == BINANCE
           ticks = CryptoProvider::Binance::Client::REST.new.klines({
             symbol: [symbol, base].join(''),
             interval: BINANCE_INTEVALS[interval],
@@ -63,6 +67,26 @@ module CryptoProvider
             tmp['BV'] = t[7]
             Tick.new(tmp)
           end
+        elsif exchange == POLONIEX
+          response = {}
+          if (interval == 'day')
+            response = CryptoProvider::Poloniex::Client.get_day_ticks([base, symbol].join('_'))
+          elsif interval == 'hour'
+            response = CryptoProvider::Poloniex::Client.get_half_hour_ticks([base, symbol].join('_'))
+          elsif interval == 'fiveMin'
+            response = CryptoProvider::Poloniex::Client.get_five_min_ticks([base, symbol].join('_'))
+          end
+          ticks = JSON.parse(response.body)
+          ticks.map do | t |
+            tmp = {}
+            tmp['O'] = t['open']
+            tmp['H'] = t['high']
+            tmp['L'] = t['low']
+            tmp['C'] = t['close']
+            tmp['V'] = t['quoteVolume']
+            tmp['BV'] = t['volume']
+            Tick.new(tmp)
+          end
         else
           []
         end
@@ -91,6 +115,20 @@ module CryptoProvider
         daily_change: m['priceChangePercent'],
         volume: m['volume'],
         base_volume: m['quoteVolume']
+      })}
+    end
+    def self.summary_poloniex
+      markets = []
+      response = CryptoProvider::Poloniex::Client.ticker
+      result = JSON.parse(response.body)
+      result.each{|key, value| markets.push(value.merge({ 'symbol' => key }))}
+      markets.map{|m| MarketSummary.new({
+        exchange: POLONIEX,
+        base: m['symbol'].split('_')[0],
+        symbol: m['symbol'].split('_')[1],
+        daily_change: m['percentChange'],
+        volume: m['quoteVolume'],
+        base_volume: m['baseVolume']
       })}
     end
     def self.resolve_binance_symbol(symbol)
