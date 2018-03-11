@@ -1,5 +1,5 @@
 import React from 'react';
-import { MarketBBChart } from 'app-comps-common';
+import { MarketBBChart, MarketOrderBookChart } from 'app-comps-common';
 import BBAll from '../tables/bb-all';
 import HistoryChange from '../tables/history-change';
 import MarketInfo from './market-info';
@@ -12,7 +12,7 @@ const MarketDetails = ({
   bookmarked,
   onAddBookmark,
   onRemoveBookmark,
-  details: { error, fiveMin, hour, day, fiveMinHistory, hourHistory, dayHistory, fiveMinBb, hourBb, dayBb },
+  details: { error, fiveMin, hour, day, fiveMinHistory, hourHistory, dayHistory, fiveMinBb, hourBb, dayBb, orderBook },
   hide,
 }) => {
   const content = !error && !hide;
@@ -39,6 +39,7 @@ const MarketDetails = ({
         hourBb={hourBb}
         dayBb={dayBb}
       />
+      <MarketOrderBookChart className="cf" orderBook={orderBook} />
     </div>
   );
 };

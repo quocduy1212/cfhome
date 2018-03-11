@@ -15,6 +15,7 @@ class MarketFilter
     five_min_bb = teller.last_xx_bb('fiveMin')
     hour_bb = teller.last_xx_bb('hour')
     day_bb = teller.last_xx_bb('day')
+    order_book = CryptoProvider::FacadeProvider.order_book(exchange, base, symbol)
 
     DpxLogger.log_brief("MarketFilter::indicators | #{exchange} | #{symbol} | #{base} | done")
     {
@@ -27,6 +28,7 @@ class MarketFilter
       five_min_bb: five_min_bb,
       hour_bb: hour_bb,
       day_bb: day_bb,
+      order_book: order_book,
     }
   end
 

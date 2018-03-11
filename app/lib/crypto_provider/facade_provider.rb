@@ -9,6 +9,22 @@ module CryptoProvider
     BINANCE = 'binance'
     POLONIEX = 'poloniex'
     EXCHANGE_LIST = [BITTREX,BINANCE, POLONIEX]
+    def self.order_book(exchange, base, symbol, limit = 100)
+      begin
+        if exchange == BITTREX
+          FacadeProvider.order_book_bittrex(symbol, base, limit)
+        elsif exchange == BINANCE
+          FacadeProvider.order_book_binance(symbol, base, limit)
+        elsif exchange == POLONIEX
+          { buy: [], sell: [] }
+        else
+          { buy: [], sell: [] }
+        end
+      rescue StandardError => ex
+        DpxLogger.log_exception(ex)
+        { buy: [], sell: [] }
+      end
+    end
     def self.summary(exchange)
       begin
         if exchange == BITTREX
@@ -94,6 +110,30 @@ module CryptoProvider
         DpxLogger.log_exception(ex)
         []
       end
+    end
+    def self.order_book_binance(symbol, base, limit = 100)
+      book = OrderBook.new
+      result = CryptoProvider::Binance::Client::REST.new.depth({ symbol: [symbol, base].join(''), limit: limit })
+      buy = result['bids'] || []
+      sell = result['asks'] || []
+      buy.each{| b | book.add_buy(b[1], b[0])}
+      sell.each{| b | book.add_sell(b[1], b[0])}
+      {
+        buy: book.buy,
+        sell: book.sell
+      }
+    end
+    def self.order_book_bittrex(symbol, base, limit = 100)
+      book = OrderBook.new
+      result = CryptoProvider::Bittrex::Order.orderbook([base, symbol].join('-'), 'both', limit)
+      buy = result['buy'] || []
+      sell = result['sell'] || []
+      buy.each{| b | book.add_buy(b['Quantity'], b['Rate'])}
+      sell.each{| b | book.add_sell(b['Quantity'], b['Rate'])}
+      {
+        buy: book.buy,
+        sell: book.sell
+      }
     end
     def self.summary_bittrex
       markets = CryptoProvider::Bittrex::Summary.all
