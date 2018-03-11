@@ -10,7 +10,7 @@ class AreaSplineXY extends Component {
         x: 'prices',
         columns: [['prices', ...this.props.prices], ['quantity', ...this.props.quantity]],
         types: {
-          quantity: 'area',
+          quantity: 'area-spline',
         },
       },
       axis: {

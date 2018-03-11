@@ -9,12 +9,12 @@ module CryptoProvider
     BINANCE = 'binance'
     POLONIEX = 'poloniex'
     EXCHANGE_LIST = [BITTREX,BINANCE, POLONIEX]
-    def self.order_book(exchange, base, symbol, limit = 100)
+    def self.order_book(exchange, base, symbol)
       begin
         if exchange == BITTREX
-          FacadeProvider.order_book_bittrex(symbol, base, limit)
+          FacadeProvider.order_book_bittrex(symbol, base)
         elsif exchange == BINANCE
-          FacadeProvider.order_book_binance(symbol, base, limit)
+          FacadeProvider.order_book_binance(symbol, base)
         elsif exchange == POLONIEX
           { buy: [], sell: [] }
         else
@@ -111,7 +111,7 @@ module CryptoProvider
         []
       end
     end
-    def self.order_book_binance(symbol, base, limit = 100)
+    def self.order_book_binance(symbol, base, limit = 50)
       book = OrderBook.new
       result = CryptoProvider::Binance::Client::REST.new.depth({ symbol: [symbol, base].join(''), limit: limit })
       buy = result['bids'] || []
@@ -123,7 +123,7 @@ module CryptoProvider
         sell: book.sell
       }
     end
-    def self.order_book_bittrex(symbol, base, limit = 100)
+    def self.order_book_bittrex(symbol, base, limit = 50)
       book = OrderBook.new
       result = CryptoProvider::Bittrex::Order.orderbook([base, symbol].join('-'), 'both', limit)
       buy = result['buy'] || []
