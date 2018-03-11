@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 import { globalSettings } from './settings';
 import { sortByBB, sortByUpTrend } from './utils';
 
-export const bookmarksList = ({ bookmarks }) => bookmarks.bookmarks;
+export const bookmarksList = ({ users }) => users.bookmarks;
 
-export const processedBookmarks = ({ bookmarks }) => bookmarks.processed;
+export const processedBookmarks = ({ bookmarks }) => bookmarks.processed.map(b => ({ ...b, bookmarked: true }));
 
 export const orderByBB = createSelector(processedBookmarks, processed => sortByBB(processed));
 

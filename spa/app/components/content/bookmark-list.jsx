@@ -8,6 +8,7 @@ const BookmarkList = ({ className, bookmarks, onRemoveBookmark }) => (
         className="mt4 animated fadeInDown"
         key={`${b.name}${b.exchange}`}
         {...b}
+        bookmarked
         onRemoveBookmark={() => onRemoveBookmark(b)}
       />
     ))}

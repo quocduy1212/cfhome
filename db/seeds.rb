@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+# user1 = User.create({ name: 'smt', email: 'smt' })
+# Bookmark.create({ name: 'BTCUSDT', base: 'USDT', symbol: 'BTC', exchange: 'bittrex', user: user1 })
+# Bookmark.create({ name: 'ETHBTC', base: 'BTC', symbol: 'ETH', exchange: 'binance', user: user1 })

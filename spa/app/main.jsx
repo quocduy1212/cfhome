@@ -26,6 +26,8 @@ render(
   document.getElementById('main-container'),
 );
 
+export { store };
+
 if (module.hot) {
   module.hot.accept('./root', () => {
     const NewRoot = require('./root').default;

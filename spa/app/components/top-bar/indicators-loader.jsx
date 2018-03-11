@@ -14,9 +14,9 @@ const IndicatorsLoader = ({ className, isProcessing, emptyBookmarkList, onFilter
   </header>
 );
 
-const mapStateToProps = ({ bookmarks }) => ({
+const mapStateToProps = ({ bookmarks, users }) => ({
   isProcessing: bookmarks.isProcessingCurrent,
-  emptyBookmarkList: bookmarks.bookmarks.length <= 0,
+  emptyBookmarkList: users.bookmarks.length <= 0,
 });
 
 const mapDispatchToProps = {

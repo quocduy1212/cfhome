@@ -7,7 +7,6 @@ import {
 } from 'app-actions-types';
 
 const DEFAULT_STATE = {
-  bookmarks: [],
   isProcessingCurrent: false,
   queue: [],
   current: {},
@@ -20,24 +19,15 @@ const bookmarks = (state = DEFAULT_STATE, action) => {
     case ADD_BOOKMARK:
       return {
         ...DEFAULT_STATE,
-        bookmarks: [
-          ...state.bookmarks,
-          {
-            ...market,
-            bookmarked: true,
-          },
-        ],
       };
     case REMOVE_BOOKMARK:
       return {
         ...state,
-        bookmarks: state.bookmarks.filter(b => `${b.name}${b.exchange}` !== `${market.name}${market.exchange}`) || [],
         processed: state.processed.filter(b => `${b.name}${b.exchange}` !== `${market.name}${market.exchange}`) || [],
       };
     case LOAD_BOOKMARKS_INDICATORS:
       return {
         ...DEFAULT_STATE,
-        bookmarks: state.bookmarks,
         queue: action.markets,
       };
     case LOAD_BOOKMARK_MARKET_INDICATORS:

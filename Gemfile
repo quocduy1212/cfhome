@@ -39,9 +39,10 @@ gem 'rufus-scheduler'
 gem 'rest-client'
 gem 'addressable'
 gem 'openssl'
+gem 'draper'
 
 group :development, :test do
-  gem 'sqlite3'
+  gem 'mysql2'
   gem 'rspec-rails', '~> 3.6'
   gem 'dotenv-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

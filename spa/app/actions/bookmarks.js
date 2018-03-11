@@ -2,19 +2,51 @@ import api from 'lib/api';
 import {
   ADD_BOOKMARK,
   REMOVE_BOOKMARK,
+  UPDATE_BOOKMARK,
   LOAD_BOOKMARKS_INDICATORS,
   LOAD_BOOKMARK_MARKET_INDICATORS,
 } from 'app-actions-types';
+import { toast } from 'react-toastify';
 
-export const addBookmark = market => ({
+const addBookmarkObj = market => ({
   type: ADD_BOOKMARK,
   market,
 });
 
-export const removeBookmark = market => ({
+const removeBookmarkObj = market => ({
   type: REMOVE_BOOKMARK,
   market,
 });
+
+const updateBookmark = market => ({
+  type: UPDATE_BOOKMARK,
+  market,
+});
+
+export const addBookmark = market => dispatch => {
+  dispatch(addBookmarkObj(market));
+  api
+    .post('/api/bookmarks', {
+      ...market,
+    })
+    .then(response => {
+      toast.success('Bookmark added');
+      dispatch(updateBookmark(response.data));
+    })
+    .catch(() => {
+      dispatch(removeBookmarkObj(market));
+    });
+};
+
+export const removeBookmark = market => dispatch => {
+  dispatch(removeBookmarkObj(market));
+  api
+    .delete(`/api/bookmarks/${market.id}`)
+    .then(() => toast.success('Bookmark removed'))
+    .catch(() => {
+      dispatch(addBookmarkObj(market));
+    });
+};
 
 export const loadBookmarkMarketIndicators = market => (dispatch, getState) => {
   dispatch({
@@ -37,7 +69,7 @@ export const loadBookmarkMarketIndicators = market => (dispatch, getState) => {
 };
 
 export const loadBookmarksIndicators = () => (dispatch, getState) => {
-  const markets = getState().bookmarks.bookmarks;
+  const markets = getState().users.bookmarks;
   dispatch({
     type: LOAD_BOOKMARKS_INDICATORS,
     markets,

@@ -21,7 +21,7 @@ const Content = props =>
 const mapStateToProps = state => ({
   loadingMessage: getLoadingMessage(state.bookmarks),
   workingOnBookmarks: state.bookmarks.processed.length > 0 || state.bookmarks.isProcessingCurrent,
-  bookmarks: state.bookmarks.bookmarks,
+  bookmarks: state.users.bookmarks,
   displayMode: state.settings.displayMode,
   reordered: orderedData(state),
 });

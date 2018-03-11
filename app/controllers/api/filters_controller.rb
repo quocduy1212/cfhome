@@ -1,20 +1,10 @@
-class Api::FiltersController < ApplicationController
+class Api::FiltersController < Api::ApiController
   def summary
-    begin
-      result = MarketFilter.summary(params[:exchange], params[:btc], params[:usdt])
-      render json: result, status: :ok
-    rescue StandardError => ex
-      DpxLogger.log_exception(ex)
-      render json: { data: { error: ex } }, status: :ok
-    end
+    result = MarketFilter.summary(params[:exchange], params[:btc], params[:usdt])
+    render json: result, status: :ok
   end
 
   def indicators
-    begin
-      render json: { data: MarketFilter.indicators(params[:exchange], params[:base], params[:symbol]) }, status: :ok
-    rescue StandardError => ex
-      DpxLogger.log_exception(ex)
-      render json: { data: { error: ex } }, status: :ok
-    end
+    render json: { data: MarketFilter.indicators(params[:exchange], params[:base], params[:symbol]) }, status: :ok
   end
 end
