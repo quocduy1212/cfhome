@@ -34,7 +34,7 @@ const Content = ({
         className="mt4 animated fadeInDown"
         {...r}
         onAddBookmark={() => onAddBookmark({ name: r.name, exchange: r.exchange, base: r.base, symbol: r.symbol })}
-        onRemoveBookmark={() => onRemoveBookmark({ name: r.name, exchange: r.exchange })}
+        onRemoveBookmark={() => onRemoveBookmark({ id: r.id, name: r.name, exchange: r.exchange })}
       />
     ))}
   </section>
