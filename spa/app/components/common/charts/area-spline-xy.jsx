@@ -25,7 +25,12 @@ class AreaSplineXY extends Component {
         },
       },
       legend: { show: false },
-      tooltip: { show: true },
+      tooltip: {
+        show: true,
+        format: {
+          value: value => `${value}/${this.props.totalY}`,
+        },
+      },
       point: { show: false },
     };
     options.data.types[this.props.yname] = 'area';
