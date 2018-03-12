@@ -8,7 +8,7 @@ class AreaSplineXY extends Component {
       bindto: this.ref,
       data: {
         x: 'prices',
-        columns: [['prices', ...this.props.prices], [this.props.yname, ...this.props.quantity]],
+        columns: [['prices', ...this.props.prices], [this.props.yname, ...this.props.yvalues]],
         types: {},
       },
       color: {
@@ -20,8 +20,8 @@ class AreaSplineXY extends Component {
         },
         y: {
           show: false,
-          min: Math.min(...this.props.quantity),
-          max: Math.max(...this.props.quantity),
+          min: this.props.min,
+          max: this.props.max,
         },
       },
       legend: { show: false },
