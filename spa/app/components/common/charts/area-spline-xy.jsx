@@ -4,14 +4,15 @@ import styles from './area-spline.scss';
 
 class AreaSplineXY extends Component {
   componentDidMount() {
-    c3.generate({
+    const options = {
       bindto: this.ref,
       data: {
         x: 'prices',
-        columns: [['prices', ...this.props.prices], ['quantity', ...this.props.quantity]],
-        types: {
-          quantity: 'area-spline',
-        },
+        columns: [['prices', ...this.props.prices], [this.props.yname, ...this.props.quantity]],
+        types: {},
+      },
+      color: {
+        pattern: [this.props.color],
       },
       axis: {
         x: {
@@ -26,7 +27,9 @@ class AreaSplineXY extends Component {
       legend: { show: false },
       tooltip: { show: true },
       point: { show: false },
-    });
+    };
+    options.data.types[this.props.yname] = 'area';
+    c3.generate(options);
   }
   render() {
     const { className } = this.props;

@@ -6,6 +6,7 @@ import MarketInfo from './market-info';
 
 const MarketDetails = ({
   className,
+  base,
   exchange,
   name,
   dailyChange,
@@ -39,7 +40,7 @@ const MarketDetails = ({
         hourBb={hourBb}
         dayBb={dayBb}
       />
-      <MarketOrderBookChart className="cf" orderBook={orderBook} />
+      <MarketOrderBookChart className="cf" base={base} orderBook={orderBook} />
     </div>
   );
 };
