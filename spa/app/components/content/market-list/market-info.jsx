@@ -1,6 +1,8 @@
 import React from 'react';
 import { toPercentage } from 'app-utils';
 
+const getDailyChangeClass = change => (change > 0 ? 'f6 green' : 'f6 red');
+
 const MarketInfo = ({ className, name, dailyChange, exchange, bookmarked, onAddBookmark, onRemoveBookmark }) => (
   <div className={className}>
     <div>
@@ -16,7 +18,7 @@ const MarketInfo = ({ className, name, dailyChange, exchange, bookmarked, onAddB
         </i>
       )}
     </div>
-    {dailyChange && <div className="f6 green">{toPercentage(dailyChange)}</div>}
+    {dailyChange && <div className={getDailyChangeClass(dailyChange)}>{toPercentage(dailyChange)}</div>}
     <div className="f6">{exchange}</div>
   </div>
 );

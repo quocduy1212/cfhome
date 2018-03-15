@@ -4,6 +4,7 @@ import summary from './summary';
 import indicators from './indicators';
 import settings from './settings';
 import bookmarks from './bookmarks';
+import monitor from './monitor';
 import users from './users';
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   indicators,
   settings,
   bookmarks,
+  monitor,
   users,
   routing,
 });

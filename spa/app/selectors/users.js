@@ -1,4 +1,6 @@
-// import { createSelector } from 'reselect';
-
-// export const loading = ({ users }) => users.isLoading;
-// export const validated = ({ users }) => users.validated;
+export const availableMarkets = ({ users }) =>
+  users.markets.map(m => ({
+    ...m,
+    label: `${m.name}@${m.exchange}`,
+    value: `${m.name}@${m.exchange}`,
+  }));

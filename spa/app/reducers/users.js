@@ -4,6 +4,7 @@ import { handle } from 'redux-pack';
 const DEFAULT_STATE = {
   validated: false,
   bookmarks: [],
+  markets: [],
 };
 
 const users = (state = DEFAULT_STATE, action) => {
