@@ -31,7 +31,7 @@ const Content = ({
     {reordered.map(r => (
       <MarketDetails
         key={`${r.name}${r.exchange}`}
-        className="mt4 animated fadeInDown"
+        className="mt4 animated fadeInDown fl w-third-ns w-100"
         {...r}
         onAddBookmark={() => onAddBookmark({ name: r.name, exchange: r.exchange, base: r.base, symbol: r.symbol })}
         onRemoveBookmark={() => onRemoveBookmark({ id: r.id, name: r.name, exchange: r.exchange })}

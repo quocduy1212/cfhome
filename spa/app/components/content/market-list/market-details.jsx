@@ -4,6 +4,11 @@ import BBAll from '../tables/bb-all';
 import HistoryChange from '../tables/history-change';
 import MarketInfo from './market-info';
 
+const formatDate = timestamp => {
+  const d = new Date(timestamp * 1000);
+  return `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+};
+
 const MarketDetails = ({
   className,
   base,
@@ -13,36 +18,47 @@ const MarketDetails = ({
   bookmarked,
   onAddBookmark,
   onRemoveBookmark,
-  details: { error, fiveMin, hour, day, fiveMinHistory, hourHistory, dayHistory, fiveMinBb, hourBb, dayBb, orderBook },
+  details: {
+    inspectedAt,
+    error,
+    fiveMin,
+    hour,
+    day,
+    fiveMinHistory,
+    hourHistory,
+    dayHistory,
+    fiveMinBb,
+    hourBb,
+    dayBb,
+    orderBook,
+  },
   hide,
-}) => {
-  const content = !error && !hide;
-  return (
-    <div className={className}>
-      <MarketInfo
-        name={name}
-        dailyChange={dailyChange}
-        exchange={exchange}
-        bookmarked={bookmarked}
-        onAddBookmark={onAddBookmark}
-        onRemoveBookmark={onRemoveBookmark}
-      />
-      {error && <div className="ba br2 b--red pv2 ph3 f6 mt2 red">{error}</div>}
-      {hide && <div className="ba br2 b--orange pv2 ph3 f6 mt2 orange">{hide}</div>}
-      {content && <BBAll className="mt2" day={day} hour={hour} fiveMin={fiveMin} />}
-      {content && <HistoryChange className="mt2" day={day} hour={hour} fiveMin={fiveMin} />}
-      <MarketBBChart
-        className="cf"
-        dayHistory={dayHistory}
-        hourHistory={hourHistory}
-        fiveMinHistory={fiveMinHistory}
-        fiveMinBb={fiveMinBb}
-        hourBb={hourBb}
-        dayBb={dayBb}
-      />
-      <MarketOrderBookChart className="cf" base={base} orderBook={orderBook} />
-    </div>
-  );
-};
+}) => (
+  <div className={className}>
+    {error && <div className="ba br2 b--red pv2 ph3 f6 mt2 red dib fr">{error}</div>}
+    {hide && <div className="ba br2 b--orange pv2 ph3 f6 mt2 orange dib fr">{hide}</div>}
+    <MarketInfo
+      name={name}
+      dailyChange={dailyChange}
+      exchange={exchange}
+      bookmarked={bookmarked}
+      onAddBookmark={onAddBookmark}
+      onRemoveBookmark={onRemoveBookmark}
+    />
+    <div className="f6">{inspectedAt ? formatDate(inspectedAt) : '--'}</div>
+    <BBAll className="mt2" day={day} hour={hour} fiveMin={fiveMin} />
+    <HistoryChange className="mt2" day={day} hour={hour} fiveMin={fiveMin} />
+    <MarketBBChart
+      className="cf"
+      dayHistory={dayHistory}
+      hourHistory={hourHistory}
+      fiveMinHistory={fiveMinHistory}
+      fiveMinBb={fiveMinBb}
+      hourBb={hourBb}
+      dayBb={dayBb}
+    />
+    <MarketOrderBookChart className="cf" base={base} orderBook={orderBook} />
+  </div>
+);
 
 export default MarketDetails;

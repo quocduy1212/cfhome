@@ -8,7 +8,7 @@ const IndicatorsLayout = ({ className = '' }) => (
     <TopMenu className="mv3" />
     <CryptoFilter className="mv3" />
     <hr className="bt b--light-gray mt3" />
-    <Content className="ph2 ph7-ns ph4-m" />
+    <Content className="ph2" />
   </main>
 );
 

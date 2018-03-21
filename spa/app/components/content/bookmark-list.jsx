@@ -5,7 +5,7 @@ const BookmarkList = ({ className, bookmarks, onRemoveBookmark }) => (
   <div className={className}>
     {bookmarks.map(b => (
       <MarketInfo
-        className="mt4 animated fadeInDown"
+        className="mt4 animated fadeInDown fl w-third-ns w-100"
         key={`${b.name}${b.exchange}`}
         {...b}
         bookmarked

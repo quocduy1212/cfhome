@@ -29,6 +29,7 @@ class MarketFilter
       hour_bb: hour_bb,
       day_bb: day_bb,
       order_book: order_book,
+      inspected_at: Time.now.to_i
     }
   end
 

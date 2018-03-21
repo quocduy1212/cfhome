@@ -18,9 +18,9 @@ class AhihiLayout extends Component {
           <span className="dib ml2 pointer" onClick={() => this.props.me(this.state.token)}>
             load
           </span>
-          {isLoading && <LoadingEllipsis text="Loading user details" />}
-          {validated && <div className="ba br2 b--green pv2 ph3 f6 mt2 green">{name} loaded</div>}
-          {!!error && <div className="ba br2 b--red pv2 ph3 f6 mt2 red">{error}</div>}
+          {isLoading && <LoadingEllipsis className="mt4" text="Loading user details" />}
+          {validated && <div className="ba br2 b--green pv2 ph3 f6 mt4 green">{name} loaded</div>}
+          {!!error && <div className="ba br2 b--red pv2 ph3 f6 mt4 red">{error}</div>}
         </div>
       </main>
     );
