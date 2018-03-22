@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import c3 from 'c3';
+import { commaThousandSeparated } from 'app-utils';
 import styles from './area-spline.scss';
 
 class AreaSplineXY extends Component {
@@ -28,7 +29,7 @@ class AreaSplineXY extends Component {
       tooltip: {
         show: true,
         format: {
-          value: value => `${value}/${this.props.totalY}`,
+          value: value => `${commaThousandSeparated(value)}/${commaThousandSeparated(this.props.totalY)}`,
         },
       },
       point: { show: false },

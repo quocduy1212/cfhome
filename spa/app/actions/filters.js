@@ -1,4 +1,4 @@
-import api from 'lib/api';
+import api from 'app-lib/api';
 import { LOAD_SUMMARY, LOAD_INDICATORS, LOAD_INDICATORS_MARKET } from 'app-actions-types';
 
 export const loadIndicatorsForMarket = market => (dispatch, getState) => {

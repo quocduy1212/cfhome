@@ -1,12 +1,13 @@
 import React from 'react';
 import { MarketBBChart, MarketOrderBookChart } from 'app-comps-common';
+import { twoDecimals } from 'app-utils';
 import BBAll from '../tables/bb-all';
 import HistoryChange from '../tables/history-change';
 import MarketInfo from './market-info';
 
 const formatDate = timestamp => {
   const d = new Date(timestamp * 1000);
-  return `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+  return `${twoDecimals(d.getHours())}:${twoDecimals(d.getMinutes())}:${twoDecimals(d.getSeconds())}`;
 };
 
 const MarketDetails = ({

@@ -1,6 +1,8 @@
 import numeral from 'numeral';
 
 export const twoDecimalsInNumber = value => Math.round(value * 100) / 100;
+
+export const commaThousandSeparated = value => numeral(value).format('0,0.00');
 export const twoDecimals = number => numeral(number).format('00');
 export const toPercentage = dotPercentage => `${dotPercentage > 0 ? '+' : ''}${numeral(dotPercentage).format('0.00')}%`;
 export const toPercentageNoDecimal = dotPercentage =>

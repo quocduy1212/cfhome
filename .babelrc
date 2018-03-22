@@ -10,7 +10,7 @@
         "app-actions-types": "./spa/app/actions/types",
         "app-selectors": "./spa/app/selectors",
         "app-actions": "./spa/app/actions",
-        "lib": "./spa/app/lib",
+        "app-lib": "./spa/app/lib",
         "app-utils": "./spa/app/utils",
       }
     }]
