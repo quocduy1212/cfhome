@@ -9,6 +9,7 @@ module CryptoProvider
     BINANCE = 'binance'
     POLONIEX = 'poloniex'
     EXCHANGE_LIST = [BITTREX,BINANCE, POLONIEX]
+
     def self.order_book(exchange, base, symbol)
       begin
         if exchange == BITTREX
@@ -55,7 +56,7 @@ module CryptoProvider
           ticks = CryptoProvider::Binance::Client::REST.new.klines({
             symbol: [symbol, base].join(''),
             interval: BINANCE_INTEVALS[interval],
-            limit: 100
+            limit: 500
           })
           ticks.map do | t |
             # [
@@ -81,6 +82,7 @@ module CryptoProvider
             tmp['C'] = t[4]
             tmp['V'] = t[5]
             tmp['BV'] = t[7]
+            tmp['T'] = Time.at(t[6] / 1000).to_s
             Tick.new(tmp)
           end
         elsif exchange == POLONIEX

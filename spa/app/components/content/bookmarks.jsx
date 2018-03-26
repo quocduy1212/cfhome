@@ -3,19 +3,28 @@ import { connect } from 'react-redux';
 import { orderedData } from 'app-selectors/bookmarks';
 import { globalSettingsChange } from 'app-actions/settings';
 import { addBookmark, removeBookmark } from 'app-actions/bookmarks';
-import MarketList from './market-list';
-import BookmarkList from './bookmark-list';
+import MarketsList from './markets-list';
+import BookmarksList from './bookmarks-list';
 
 const getLoadingMessage = ({ isProcessingCurrent, queue, processed, current }) =>
   isProcessingCurrent
     ? `Loading | ${processed.length + 1}/${processed.length + queue.length + 1} | ${current.name} | ${current.exchange}`
     : '';
 
+const CHARTS = {
+  historyCount: true,
+  bbCount: true,
+  bbChart: true,
+  orderBookChart: true,
+  dayPricesChart: true,
+  volumeChart: true,
+};
+
 const Content = props =>
   props.workingOnBookmarks ? (
-    <MarketList {...props} />
+    <MarketsList {...props} charts={CHARTS} />
   ) : (
-    <BookmarkList className={props.className} bookmarks={props.bookmarks} onRemoveBookmark={props.onRemoveBookmark} />
+    <BookmarksList className={props.className} bookmarks={props.bookmarks} onRemoveBookmark={props.onRemoveBookmark} />
   );
 
 const mapStateToProps = state => ({

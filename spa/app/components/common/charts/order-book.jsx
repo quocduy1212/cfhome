@@ -1,6 +1,6 @@
 import React from 'react';
 import { twoDecimalsInNumber } from 'app-utils';
-import AreaSplineXY from './charts/area-spline-xy';
+import AreaStepXY from './area-step-xy';
 
 const yvalues = data => data.map(b => twoDecimalsInNumber(b.quantity * b.price));
 
@@ -14,21 +14,23 @@ const MarketOrderBookChart = ({ className = '', base, orderBook: { buy, sell } }
   const max = Math.max(...tmp);
   return (
     <div className={className}>
-      <AreaSplineXY
+      <AreaStepXY
         className="fl w-50"
         prices={buy.map(b => b.price)}
         yvalues={buyYValues}
         yname={base}
+        xname="price"
         min={min}
         max={max}
         color="green"
         totalY={totalBuy}
       />
-      <AreaSplineXY
+      <AreaStepXY
         className="fl w-50"
         prices={sell.map(b => b.price)}
         yvalues={sellYValues}
         yname={base}
+        xname="price"
         min={min}
         max={max}
         color="red"

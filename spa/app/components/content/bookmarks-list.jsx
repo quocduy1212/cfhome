@@ -1,7 +1,7 @@
 import React from 'react';
-import MarketInfo from './market-list/market-info';
+import { MarketInfo } from 'app-comps-common';
 
-const BookmarkList = ({ className, bookmarks, onRemoveBookmark }) => (
+const BookmarksList = ({ className, bookmarks, onRemoveBookmark }) => (
   <div className={className}>
     {bookmarks.map(b => (
       <MarketInfo
@@ -15,4 +15,4 @@ const BookmarkList = ({ className, bookmarks, onRemoveBookmark }) => (
   </div>
 );
 
-export default BookmarkList;
+export default BookmarksList;

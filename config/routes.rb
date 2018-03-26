@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     get 'filters/indicators', to: 'filters#indicators'
     get 'filters/summary'
+    get 'filters/volume'
     get 'users/hello', to: 'users#hello'
     resources :bookmarks, only: [:create, :destroy]
   end

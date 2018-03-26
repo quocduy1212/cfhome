@@ -7,6 +7,7 @@ import {
   LOAD_BOOKMARK_MARKET_INDICATORS,
 } from 'app-actions-types';
 import { toast } from 'react-toastify';
+import { getBookmark } from 'app-selectors/users';
 
 const addBookmarkObj = market => ({
   type: ADD_BOOKMARK,
@@ -38,10 +39,12 @@ export const addBookmark = market => dispatch => {
     });
 };
 
-export const removeBookmark = market => dispatch => {
+export const removeBookmark = market => (dispatch, getState) => {
+  const state = getState();
+  const b = getBookmark(state, market.exchange, market.name);
   dispatch(removeBookmarkObj(market));
   api
-    .delete(`/api/bookmarks/${market.id}`)
+    .delete(`/api/bookmarks/${b.id}`)
     .then(() => toast.success('Bookmark removed'))
     .catch(() => {
       dispatch(addBookmarkObj(market));

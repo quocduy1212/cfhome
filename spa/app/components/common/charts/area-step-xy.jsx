@@ -3,13 +3,13 @@ import c3 from 'c3';
 import { commaThousandSeparated } from 'app-utils';
 import styles from './area-spline.scss';
 
-class AreaSplineXY extends Component {
+class AreaStepXY extends Component {
   componentDidMount() {
     const options = {
       bindto: this.ref,
       data: {
-        x: 'prices',
-        columns: [['prices', ...this.props.prices], [this.props.yname, ...this.props.yvalues]],
+        x: this.props.xname,
+        columns: [[this.props.xname, ...this.props.prices], [this.props.yname, ...this.props.yvalues]],
         types: {},
       },
       color: {
@@ -34,7 +34,7 @@ class AreaSplineXY extends Component {
       },
       point: { show: false },
     };
-    options.data.types[this.props.yname] = 'area';
+    options.data.types[this.props.yname] = 'area-step';
     c3.generate(options);
   }
   render() {
@@ -50,4 +50,4 @@ class AreaSplineXY extends Component {
   }
 }
 
-export default AreaSplineXY;
+export default AreaStepXY;

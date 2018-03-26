@@ -1,5 +1,5 @@
 import React from 'react';
-import AreaSplineV2 from './charts/area-spline_v2';
+import AreaSplineV2 from './area-spline_v2';
 
 const closePrices = history => history.map(h => h.close);
 const bbLower = bb => bb.filter(b => !!b).map(c => (c[2] > 0 ? c[2] : 0));

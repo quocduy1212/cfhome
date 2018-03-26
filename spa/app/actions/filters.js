@@ -1,5 +1,5 @@
 import api from 'app-lib/api';
-import { LOAD_SUMMARY, LOAD_INDICATORS, LOAD_INDICATORS_MARKET } from 'app-actions-types';
+import { LOAD_VOLUME, LOAD_SUMMARY, LOAD_INDICATORS, LOAD_INDICATORS_MARKET } from 'app-actions-types';
 
 export const loadIndicatorsForMarket = market => (dispatch, getState) => {
   dispatch({
@@ -38,5 +38,12 @@ export const filterBySummary = (exchange, btc, usdt) => dispatch => {
     meta: {
       onSuccess: response => dispatch(loadIndicators(response.data)),
     },
+  });
+};
+
+export const filterByVolume = () => dispatch => {
+  dispatch({
+    type: LOAD_VOLUME,
+    promise: api.get('/api/filters/volume'),
   });
 };

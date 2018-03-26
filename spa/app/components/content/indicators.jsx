@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { orderedData } from 'app-selectors/indicators';
 import { globalSettingsChange } from 'app-actions/settings';
 import { addBookmark, removeBookmark } from 'app-actions/bookmarks';
-import MarketList from './market-list';
+import MarketsList from './markets-list';
 
 const getLoadingMessage = (summary, { isProcessingCurrent, queue, processed, current }) => {
   if (summary.isLoading) {
@@ -16,7 +16,14 @@ const getLoadingMessage = (summary, { isProcessingCurrent, queue, processed, cur
   return '';
 };
 
-const Content = props => <MarketList {...props} />;
+const CHARTS = {
+  historyCount: true,
+  bbCount: true,
+  bbChart: true,
+  orderBookChart: true,
+};
+
+const Content = props => <MarketsList {...props} charts={CHARTS} />;
 
 const mapStateToProps = state => ({
   loadingMessage: getLoadingMessage(state.summary, state.indicators),
