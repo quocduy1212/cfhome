@@ -33,8 +33,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'faraday'
 gem 'faraday_middleware'
-gem 'indicators'
-gem 'securities'
 gem 'rufus-scheduler'
 gem 'rest-client'
 gem 'addressable'

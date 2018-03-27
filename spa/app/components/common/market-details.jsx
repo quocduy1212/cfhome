@@ -7,6 +7,7 @@ import OrderBook from './charts/order-book';
 import BBAll from './tables/bb-all';
 import HistoryChange from './tables/history-change';
 import MarketInfo from './market-info';
+import MarketSto from './charts/market-sto';
 
 const BB_TICKS = -50;
 
@@ -64,12 +65,16 @@ const MarketDetails = ({
     fiveMinBb,
     hourBb,
     dayBb,
+    fiveMinSto,
+    hourSto,
+    daySto,
     orderBook,
   },
   hide,
   bbCount,
   historyCount,
   bbChart,
+  stoChart,
   orderBookChart,
   volumeChart,
   dayPricesChart,
@@ -99,6 +104,14 @@ const MarketDetails = ({
         dayBb={dayBb.slice(BB_TICKS)}
       />
     )}
+    {stoChart && (
+      <MarketSto
+        className="cf"
+        daySto={daySto.slice(BB_TICKS)}
+        hourSto={hourSto.slice(BB_TICKS)}
+        fiveMinSto={fiveMinSto.slice(BB_TICKS)}
+      />
+    )}
     {orderBookChart && <OrderBook className="cf" base={base} orderBook={orderBook} />}
     {dayPricesChart && <AreaStepXYTimeseries {...pricesChartData(dayHistory)} />}
     {volumeChart && <AreaStepXYTimeseries {...volumeChartData(dayHistory)} />}
@@ -118,6 +131,7 @@ MarketDetails.defaultProps = {
   bbCount: false,
   historyCount: false,
   bbChart: false,
+  stoChart: false,
   orderBookChart: false,
   volumeChart: false,
   dayPricesChart: false,

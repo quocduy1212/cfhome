@@ -3,7 +3,7 @@ module Tellers
     HISTORY_MAX_TICKS = 150
     HISTORY_PERCENTAGE_CHANGE = 6
 
-    attr_reader :base, :symbol, :history, :bb
+    attr_reader :base, :symbol, :history, :bb, :sto
 
     def initialize(exchange, base, symbol)
       @exchange = exchange
@@ -11,12 +11,14 @@ module Tellers
       @symbol = symbol
       @history = {}
       @bb = {}
+      @sto = {}
     end
 
     def five_min_teller
       begin
         load_history
         calc_bb_indicator
+        calc_sto_indicator
         bb = on_bb_upper
         up = on_up_trend
         hc = recent_history_percentage_change
@@ -31,6 +33,7 @@ module Tellers
       begin
         load_history('hour')
         calc_bb_indicator('hour')
+        calc_sto_indicator('hour')
         bb = on_bb_upper('hour')
         up = on_up_trend('hour')
         hc = recent_history_percentage_change('hour')
@@ -45,6 +48,7 @@ module Tellers
       begin
         load_history('day')
         calc_bb_indicator('day')
+        calc_sto_indicator('day')
         bb = on_bb_upper('day')
         up = on_up_trend('day')
         hc = recent_history_percentage_change('day')
@@ -67,6 +71,22 @@ module Tellers
         @bb[interval] = bb_data.calc(:type => :bb, :params => [20,2]).output
       else
         @bb[interval] = []
+      end
+    end
+
+    def calc_sto_indicator(interval = 'fiveMin')
+      if (@history[interval].length > 20)
+        closes = @history[interval].map{ |t| t.close }
+        highs = @history[interval].map{ |t| t.high }
+        lows = @history[interval].map{ |t| t.low }
+        bb_data = Indicators::Data.new({
+          adj_close: closes,
+          high: highs,
+          low: lows,
+        })
+        @sto[interval] = bb_data.calc(:type => :sto, :params => [14, 3, 3]).output
+      else
+        @sto[interval] = []
       end
     end
 

@@ -20,6 +20,7 @@ const CHARTS = {
   historyCount: true,
   bbCount: true,
   bbChart: true,
+  stoChart: true,
   orderBookChart: true,
 };
 

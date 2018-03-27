@@ -19,6 +19,10 @@ class MarketFilter
     hour_bb = teller.bb['hour']
     day_bb = teller.bb['day']
 
+    five_min_sto = teller.sto['fiveMin']
+    hour_sto = teller.sto['hour']
+    day_sto = teller.sto['day']
+
     order_book = CryptoProvider::FacadeProvider.order_book(exchange, base, symbol)
 
     DpxLogger.log_brief("MarketFilter::indicators | #{exchange} | #{symbol} | #{base} | done")
@@ -32,6 +36,9 @@ class MarketFilter
       five_min_bb: five_min_bb,
       hour_bb: hour_bb,
       day_bb: day_bb,
+      five_min_sto: five_min_sto,
+      hour_sto: hour_sto,
+      day_sto: day_sto,
       order_book: order_book,
       inspected_at: Time.now.to_i
     }
