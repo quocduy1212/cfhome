@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { timestampToTime, timestampToDate } from 'app-utils';
 import AreaStepXYTimeseries from './charts/area-step-xy-timeseries';
@@ -44,79 +44,89 @@ const pricesChartData = history => ({
   yvalues: history.map(d => d.close),
 });
 
-const MarketDetails = ({
-  className,
-  base,
-  exchange,
-  name,
-  dailyChange,
-  bookmarked,
-  onAddBookmark,
-  onRemoveBookmark,
-  details: {
-    inspectedAt,
-    error,
-    fiveMin,
-    hour,
-    day,
-    fiveMinHistory,
-    hourHistory,
-    dayHistory,
-    fiveMinBb,
-    hourBb,
-    dayBb,
-    fiveMinSto,
-    hourSto,
-    daySto,
-    orderBook,
-  },
-  hide,
-  bbCount,
-  historyCount,
-  bbChart,
-  stoChart,
-  orderBookChart,
-  volumeChart,
-  dayPricesChart,
-}) => (
-  <div className={className}>
-    {error && <div className="ba br2 b--red pv2 ph3 f6 mt2 red dib fr">{error}</div>}
-    {hide && <div className="ba br2 b--orange pv2 ph3 f6 mt2 orange dib fr">{hide}</div>}
-    <MarketInfo
-      name={name}
-      dailyChange={dailyChange}
-      exchange={exchange}
-      bookmarked={bookmarked}
-      onAddBookmark={onAddBookmark}
-      onRemoveBookmark={onRemoveBookmark}
-    />
-    <div className="f6">{inspectedAt ? timestampToTime(inspectedAt) : '--'}</div>
-    {bbCount && <BBAll className="mt2" day={day} hour={hour} fiveMin={fiveMin} />}
-    {historyCount && <HistoryChange className="mt2" day={day} hour={hour} fiveMin={fiveMin} />}
-    {bbChart && (
-      <MarketBB
-        className="cf"
-        dayHistory={dayHistory.slice(BB_TICKS)}
-        hourHistory={hourHistory.slice(BB_TICKS)}
-        fiveMinHistory={fiveMinHistory.slice(BB_TICKS)}
-        fiveMinBb={fiveMinBb.slice(BB_TICKS)}
-        hourBb={hourBb.slice(BB_TICKS)}
-        dayBb={dayBb.slice(BB_TICKS)}
-      />
-    )}
-    {stoChart && (
-      <MarketSto
-        className="cf"
-        daySto={daySto.slice(BB_TICKS)}
-        hourSto={hourSto.slice(BB_TICKS)}
-        fiveMinSto={fiveMinSto.slice(BB_TICKS)}
-      />
-    )}
-    {orderBookChart && <OrderBook className="cf" base={base} orderBook={orderBook} />}
-    {dayPricesChart && <AreaStepXYTimeseries {...pricesChartData(dayHistory)} />}
-    {volumeChart && <AreaStepXYTimeseries {...volumeChartData(dayHistory)} />}
-  </div>
-);
+class MarketDetails extends Component {
+  shouldComponentUpdate(nextProps) {
+    return this.props.bookmarked !== nextProps.bookmarked;
+  }
+
+  render() {
+    const {
+      className,
+      base,
+      exchange,
+      name,
+      dailyChange,
+      bookmarked,
+      onAddBookmark,
+      onRemoveBookmark,
+      details: {
+        inspectedAt,
+        error,
+        fiveMin,
+        hour,
+        day,
+        fiveMinHistory,
+        hourHistory,
+        dayHistory,
+        fiveMinBb,
+        hourBb,
+        dayBb,
+        fiveMinSto,
+        hourSto,
+        daySto,
+        orderBook,
+      },
+      hide,
+      bbCount,
+      historyCount,
+      bbChart,
+      stoChart,
+      orderBookChart,
+      volumeChart,
+      dayPricesChart,
+    } = this.props;
+
+    return (
+      <div className={className}>
+        {error && <div className="ba br2 b--red pv2 ph3 f6 mt2 red dib fr">{error}</div>}
+        {hide && <div className="ba br2 b--orange pv2 ph3 f6 mt2 orange dib fr">{hide}</div>}
+        <MarketInfo
+          name={name}
+          dailyChange={dailyChange}
+          exchange={exchange}
+          bookmarked={bookmarked}
+          onAddBookmark={onAddBookmark}
+          onRemoveBookmark={onRemoveBookmark}
+        />
+        <div className="f6">{inspectedAt ? timestampToTime(inspectedAt) : '--'}</div>
+        {bbCount && <BBAll className="mt2" day={day} hour={hour} fiveMin={fiveMin} />}
+        {historyCount && <HistoryChange className="mt2" day={day} hour={hour} fiveMin={fiveMin} />}
+        {bbChart && (
+          <MarketBB
+            className="cf"
+            dayHistory={dayHistory.slice(BB_TICKS)}
+            hourHistory={hourHistory.slice(BB_TICKS)}
+            fiveMinHistory={fiveMinHistory.slice(BB_TICKS)}
+            fiveMinBb={fiveMinBb.slice(BB_TICKS)}
+            hourBb={hourBb.slice(BB_TICKS)}
+            dayBb={dayBb.slice(BB_TICKS)}
+          />
+        )}
+        {stoChart && (
+          <MarketSto
+            className="cf"
+            daySto={daySto.slice(BB_TICKS)}
+            hourSto={hourSto.slice(BB_TICKS)}
+            fiveMinSto={fiveMinSto.slice(BB_TICKS)}
+          />
+        )}
+        {orderBookChart && <OrderBook className="cf" base={base} orderBook={orderBook} />}
+        {dayPricesChart && <AreaStepXYTimeseries {...pricesChartData(dayHistory)} />}
+        {volumeChart && <AreaStepXYTimeseries {...volumeChartData(dayHistory)} />}
+      </div>
+    );
+  }
+}
 
 MarketDetails.propTypes = {
   bbCount: PropTypes.bool,
