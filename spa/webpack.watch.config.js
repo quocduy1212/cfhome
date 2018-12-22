@@ -20,12 +20,6 @@ module.exports = {
       filename: 'index.html',
     }),
     new ExtractTextPlugin('stylesheets/cfhome-[name].min.scss'),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
-        screw_ie8: true,
-      },
-    }),
     new CopyWebpackPlugin([
       { from: path.join(__dirname, 'app/images'), to: path.join(__dirname, '../app/assets/images') },
     ]),

@@ -3,6 +3,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -24,6 +25,7 @@ module.exports = {
       filename: 'index.html',
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new CopyWebpackPlugin([{ from: path.join(__dirname, 'app/images/'), to: path.join(__dirname, 'dist/images/') }]),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),

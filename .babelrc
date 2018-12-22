@@ -4,6 +4,7 @@
     "react-hot-loader/babel",
     ["module-resolver", {
       "alias": {
+        "app-constants": "./spa/app/constants",
         "app-vendor": "./spa/app/vendor",
         "app-comps": "./spa/app/components",
         "app-comps-common": "./spa/app/components/common",

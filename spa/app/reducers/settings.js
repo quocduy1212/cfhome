@@ -27,7 +27,7 @@ const DEFAULT_STATE = {
     DAILY_CHANGES,
     CRYPTO_EXCHANGE,
   },
-  page: 'alpha',
+  page: 'products',
   displayMode: 'up_trend',
 };
 

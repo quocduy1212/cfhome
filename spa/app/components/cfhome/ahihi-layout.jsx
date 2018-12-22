@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import TopMenu from 'app-comps/top-menu';
 import { me } from 'app-actions/users';
 import { TextInput, LoadingEllipsis } from 'app-comps/common';
 
@@ -12,7 +11,6 @@ class AhihiLayout extends Component {
     const { className = '', isLoading, validated, name, error } = this.props;
     return (
       <main className={className}>
-        <TopMenu className="mv3" />
         <div className="ph2 ph7-ns ph4-m">
           <TextInput value={this.state.token} onChange={value => this.setState({ token: value })} />
           <span className="dib ml2 pointer" onClick={() => this.props.me(this.state.token)}>

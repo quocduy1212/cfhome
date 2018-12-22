@@ -11,4 +11,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-Rails.application.config.assets.precompile += %w( btrex-main.min.css btrex-main.min.js )
+Rails.application.config.assets.precompile += %w( cfhome-main.min.css cfhome-main.min.js )
